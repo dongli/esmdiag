@@ -33,7 +33,8 @@ module ScriniumEsmDiag
           @variables[name] ||= {}
           @variables[name][:vinterp] ||= []
           @variables[name][:vinterp] << levels
-          @variables[name][:vinterp].flatten!.uniq!
+          @variables[name][:vinterp].flatten! if levels.class == Array
+          @variables[name][:vinterp].uniq!
         end
       end
     end
