@@ -1,14 +1,5 @@
 module ScriniumEsmDiag
   class Dataset
-    Actions = {
-      :has_options => [
-        :vinterp, :filter
-      ].freeze,
-      :has_no_option => [
-        :anomaly
-      ].freeze
-    }.freeze
-
     attr_reader :variables
 
     def initialize
@@ -20,6 +11,11 @@ module ScriniumEsmDiag
       raise 'root should only be set once!' if @root and arg
       @root = arg if arg
       @root
+    end
+
+    def root= arg
+      raise 'root should only be set once!' if @root and arg
+      @root = arg
     end
 
     def requires *args
@@ -36,34 +32,47 @@ module ScriniumEsmDiag
       end
     end
 
-    Actions[:has_options].each do |action|
+    Dir.glob("#{ENV['SCRINIUM_ESM_DIAG_ROOT']}/framework/actions/*.rb").map { |x| File.basename(x, File.extname(x)) }.each do |action|
+      if Actions.respond_to? :"#{action}_accepted_options"
+        options = Actions.send(:"#{action}_accepted_options")
+      else
+        options = nil
+      end
       self.class_eval <<-EOT
-        def #{action} vars, options
-          if vars == :all
-            raise 'no variable is required yet!' if @variables.empty?
-            #{action} @variables.keys, options
-          elsif vars.class == Symbol
-            #{action} [ vars ], options
-          elsif vars.class == Array
-            vars.each do |var|
-              @variables[var] ||= {}
-              @variables[var][:#{action}] = options
+        def #{action} *args
+          accepted_options = #{options}
+          if accepted_options
+            input_options = {}
+            vars = []
+            args.each do |arg|
+              if arg.class == Hash
+                input_options = arg
+              elsif accepted_options.keys.include? arg
+                input_options[arg] = true
+              elsif not input_options.empty?
+                raise 'options should be put at last!'
+              elsif arg.class == Symbol
+                vars << arg
+              end
             end
-          end
-        end
-      EOT
-    end
-
-    Actions[:has_no_option].each do |action|
-      self.class_eval <<-EOT
-        def #{action} *vars
-          vars.each do |var|
-            if var == :all
-              raise 'no variable is required yet!' if @variables.empty?
-              #{action} *@variables.keys
-            else
-              @variables[var] ||= {}
-              @variables[var][:#{action}] = nil
+            vars.each do |var|
+              if var == :all
+                raise 'no variable is required yet!' if @variables.empty?
+                #{action} *@variables.keys, input_options
+              else
+                @variables[var] ||= {}
+                @variables[var][:#{action}] = input_options
+              end
+            end
+          else
+            args.each do |var|
+              if var == :all
+                raise 'no variable is required yet!' if @variables.empty?
+                #{action} *@variables.keys
+              elsif var.class == Symbol
+                @variables[var] ||= {}
+                @variables[var][:#{action}] = nil
+              end
             end
           end
         end

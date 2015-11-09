@@ -4,6 +4,7 @@ module ScriniumEsmDiag
       model_data_root
       model_id
       case_id
+      date
       use_metrics
     ].freeze
 

@@ -27,9 +27,21 @@ describe ScriniumEsmDiag::Dataset do
     end
   end
 
+  describe 'extract method' do
+    it 'sets @variables' do
+      @dataset.extract :A, :B
+      @dataset.variables.size.must_equal 2
+      @dataset.variables[:A].class.must_equal Hash
+      @dataset.variables[:A][:extract].class.must_equal Hash
+      @dataset.variables[:A][:extract].must_be_empty
+      @dataset.variables[:B][:extract].class.must_equal Hash
+      @dataset.variables[:B][:extract].must_be_empty
+    end
+  end
+
   describe 'vinterp method' do
     it 'sets vinterp item for given variables in @variables' do
-      @dataset.vinterp [ :A, :B ], :option => :is_here
+      @dataset.vinterp :A, :B, :option => :is_here
       @dataset.variables.size.must_equal 2
       @dataset.variables[:A].class.must_equal Hash
       @dataset.variables[:A][:vinterp].class.must_equal Hash
@@ -59,7 +71,7 @@ describe ScriniumEsmDiag::Dataset do
 
   describe 'filter method' do
     it 'sets filter item for given variable in @variables' do
-      @dataset.filter [ :A, :B ], :option => :is_here
+      @dataset.filter :A, :B, :option => :is_here
       @dataset.variables.size.must_equal 2
       @dataset.variables[:A].class.must_equal Hash
       @dataset.variables[:A][:filter].class.must_equal Hash
@@ -104,7 +116,6 @@ describe ScriniumEsmDiag::Dataset do
     it 'sets anomaly item for all variables in @variables' do
       @dataset.requires :A, :B
       @dataset.anomaly :all
-      p @dataset.variables
       @dataset.variables.size.must_equal 2
       @dataset.variables[:A].class.must_equal Hash
       @dataset.variables[:A][:anomaly].must_equal nil

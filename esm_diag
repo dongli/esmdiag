@@ -5,4 +5,7 @@ require 'scrinium_esm_diag_framework'
 
 ScriniumEsmDiag::ConfigManager.parse ARGV[0]
 
+ScriniumEsmDiag::Cache.read
 ScriniumEsmDiag::DataflowManager.run
+ScriniumEsmDiag::DiagflowManager.run
+ScriniumEsmDiag::Cache.write
