@@ -1,21 +1,10 @@
 module ScriniumEsmDiag
   class Dataset
+    attr_accessor :root, :pattern, :data_list
     attr_reader :variables
 
     def initialize
-      @root = nil
       @variables = {}
-    end
-
-    def root arg = nil
-      raise 'root should only be set once!' if @root and arg
-      @root = arg if arg
-      @root
-    end
-
-    def root= arg
-      raise 'root should only be set once!' if @root and arg
-      @root = arg
     end
 
     def requires *args

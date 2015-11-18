@@ -6,12 +6,17 @@ describe ScriniumEsmDiag::Dataset do
     @dataset = ScriniumEsmDiag::Dataset.new
   end
 
-  describe 'root method' do
+  describe 'root attribute' do
     it 'sets @root instance variable only once' do
-      @dataset.root '/foo/bar'
+      @dataset.root = '/foo/bar'
       @dataset.root.must_equal '/foo/bar'
-      error = -> { @dataset.root '/bar/foo' }.must_raise RuntimeError
-      error.message.must_equal 'root should only be set once!'
+    end
+  end
+
+  describe 'pattern attribute' do
+    it 'sets @pattern instance variable only once' do
+      @dataset.pattern = 'foo.*.nc'
+      @dataset.pattern.must_equal 'foo.*.nc'
     end
   end
 
@@ -104,8 +109,8 @@ describe ScriniumEsmDiag::Dataset do
       @dataset.anomaly :A, :B
       @dataset.variables.size.must_equal 2
       @dataset.variables[:A].class.must_equal Hash
-      @dataset.variables[:A][:anomaly].must_equal nil
-      @dataset.variables[:B][:anomaly].must_equal nil
+      @dataset.variables[:A][:anomaly].must_be_empty
+      @dataset.variables[:B][:anomaly].must_be_empty
     end
 
     it 'raise error when no variable is required and :all is given' do
@@ -118,8 +123,11 @@ describe ScriniumEsmDiag::Dataset do
       @dataset.anomaly :all
       @dataset.variables.size.must_equal 2
       @dataset.variables[:A].class.must_equal Hash
-      @dataset.variables[:A][:anomaly].must_equal nil
-      @dataset.variables[:B][:anomaly].must_equal nil
+      @dataset.variables[:A][:anomaly].must_be_empty
+      @dataset.variables[:B][:anomaly].must_be_empty
     end
+  end
+
+  describe 'detour method' do
   end
 end

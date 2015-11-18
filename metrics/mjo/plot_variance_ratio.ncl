@@ -5,11 +5,12 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/shea_util.ncl"
 
 begin
 
+  prefix = model_id + "." + case_id
   suffix = start_date + ":" + end_date + ".nc"
 
-  f = addfile(case_id + ".OLR.daily.anomaly." + suffix, "r")
+  f = addfile(prefix + ".OLR.daily.anomaly." + suffix, "r")
   OLR_anomaly = f->OLR
-  f = addfile(case_id + ".OLR.daily.anomaly.filtered." + suffix, "r")
+  f = addfile(prefix + ".OLR.daily.anomaly.filtered." + suffix, "r")
   OLR_anomaly_filtered = f->OLR
 
   ; 设置时间编号。
@@ -30,9 +31,9 @@ begin
   OLR_variance_ratio_may_oct&lon = f->lon
   copy_VarCoords(OLR_variance_ratio_may_oct, OLR_variance_ratio_nov_apr)
 
-  f = addfile(case_id + ".U.daily.anomaly.vinterp850:200." + suffix, "r")
+  f = addfile(prefix + ".U.daily.anomaly.vinterp850:200." + suffix, "r")
   U850_anomaly = f->U(:,{850},:,:)
-  f = addfile(case_id + ".U.daily.anomaly.vinterp850:200.filtered." + suffix, "r")
+  f = addfile(prefix + ".U.daily.anomaly.vinterp850:200.filtered." + suffix, "r")
   U850_anomaly_filtered = f->U(:,{850},:,:)
 
   U850_anomaly_variance_may_oct = dim_variance_n_Wrap(U850_anomaly(may_oct,:,:), 0)
@@ -89,7 +90,7 @@ begin
   res_panel = True
   res_panel@gsnPanelYWhiteSpacePercent = 5
 
-  wks = gsn_open_wks("pdf", case_id + ".may-oct.variance_ratio")
+  wks = gsn_open_wks("pdf", prefix + ".may-oct.variance_ratio")
 
   gsn_define_colormap(wks, "amwg")
 
@@ -99,7 +100,7 @@ begin
   res_panel@gsnPanelMainString = "Variance Ratio (May-Oct)"
   gsn_panel(wks, plots, (/dimsizes(plots),1/), res_panel)
 
-  wks = gsn_open_wks("pdf", case_id + ".nov-apr.variance_ratio")
+  wks = gsn_open_wks("pdf", prefix + ".nov-apr.variance_ratio")
 
   gsn_define_colormap(wks, "amwg")
 

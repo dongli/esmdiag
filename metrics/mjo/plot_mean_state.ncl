@@ -5,22 +5,23 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/shea_util.ncl"
 
 begin
 
+  prefix = model_id + "." + case_id
   suffix = start_date + ":" + end_date + ".nc"
 
   may_oct = (/4,5,6,7,8,9/)
   nov_apr = (/10,11,0,1,2,3/)
 
-  f = addfile(case_id + ".OLR.monthly." + suffix, "r")
+  f = addfile(prefix + ".OLR.monthly." + suffix, "r")
   OLR_clm = clmMonTLL(f->OLR)
   OLR_clm_may_oct = dim_avg_n_Wrap(OLR_clm(may_oct,:,:), 0)
   OLR_clm_nov_apr = dim_avg_n_Wrap(OLR_clm(nov_apr,:,:), 0)
 
-  f = addfile(case_id + ".U.monthly.vinterp850:200." + suffix, "r")
+  f = addfile(prefix + ".U.monthly.vinterp850:200." + suffix, "r")
   U850_clm = clmMonTLL(f->U(:,{850},:,:))
   U850_clm_may_oct = dim_avg_n_Wrap(U850_clm(may_oct,:,:), 0)
   U850_clm_nov_apr = dim_avg_n_Wrap(U850_clm(nov_apr,:,:), 0)
 
-  f = addfile(case_id + ".PRC.monthly." + suffix, "r")
+  f = addfile(prefix + ".PRC.monthly." + suffix, "r")
   PRC = 86400*1000*f->PRC
   copy_VarCoords(f->PRC, PRC)
   PRC@units = "mm/day"
@@ -76,7 +77,7 @@ begin
   res_panel = True
   res_panel@gsnPanelYWhiteSpacePercent = 5
 
-  wks = gsn_open_wks("pdf", case_id + ".may-oct.mean_state")
+  wks = gsn_open_wks("pdf", prefix + ".may-oct.mean_state")
 
   gsn_define_colormap(wks, "amwg")
 
@@ -87,7 +88,7 @@ begin
   res_panel@gsnPanelMainString = "Mean State (May-Oct)"
   gsn_panel(wks, plots, (/dimsizes(plots),1/), res_panel)
 
-  wks = gsn_open_wks("pdf", case_id + ".nov-apr.mean_state")
+  wks = gsn_open_wks("pdf", prefix + ".nov-apr.mean_state")
 
   gsn_define_colormap(wks, "amwg")
 
