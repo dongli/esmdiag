@@ -1,6 +1,6 @@
 module ScriniumEsmDiag
   class Dataflow_mjo < Dataflow
-    create_dataset :monthly do
+    create_dataset :atm, :monthly do
       requires :PS, :OLR, :PRC, :U, :V
       extract :all, :into_multiple_files => true
       vinterp :U, :V, {
@@ -10,7 +10,7 @@ module ScriniumEsmDiag
       }
     end
 
-    create_dataset :daily do
+    create_dataset :atm, :daily do
       requires :PS, :PRC, :OLR, :U, :V
       extract :all, :into_multiple_files => true
       anomaly :PRC, :OLR, :U, :V
@@ -51,6 +51,10 @@ module ScriniumEsmDiag
             :end_lon => 100.0
           }
         }
+      }
+      detrend :PRC, :U, {
+        :follow => [ :area_avg, :lat_avg, :lon_avg ],
+        :detour => true
       }
       filter :OLR, :PRC, :U, :V, {
         :method => :butterworth, :low_pass => 1.0/100.0, :high_pass => 1.0/20.0

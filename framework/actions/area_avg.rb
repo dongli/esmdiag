@@ -18,6 +18,8 @@ module ScriniumEsmDiag
               real_options[:start_lat] ||= -90.0
               real_options[:end_lat] ||= 90.0
               ncl "#{ENV['SCRINIUM_ESM_DIAG_ROOT']}/ncl_scripts/area_avg.ncl " +
+                "model_id=\\\"#{ConfigManager.model_id}\\\" " +
+                "case_id=\\\"#{ConfigManager.case_id}\\\" " +
                 "start_lon=#{real_options[:start_lon]} " +
                 "end_lon=#{real_options[:end_lon]} " +
                 "start_lat=#{real_options[:start_lat]} " +

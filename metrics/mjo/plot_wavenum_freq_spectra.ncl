@@ -3,6 +3,8 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
 load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/contributed.ncl"
 load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/diagnostics_cam.ncl" 
 
+load "$SCRINIUM_ESM_DIAG_ROOT/ncl_scripts/tools.ncl"
+
 begin
 
   prefix = model_id + "." + case_id
@@ -21,7 +23,7 @@ begin
   seasons = (/"winter","summer"/)
 
   opt_wavfrq = False
-  opt_plot = True
+  opt_plot = common_plot_settings()
   opt_plot@cnLinesOn = False
 
   do i = 0, dimsizes(seasons)-1

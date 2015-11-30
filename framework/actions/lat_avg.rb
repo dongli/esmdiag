@@ -17,6 +17,8 @@ module ScriniumEsmDiag
               real_options[:end_lat] ||= 90.0
               real_options[:use_wgt_lat] ||= true
               ncl "#{ENV['SCRINIUM_ESM_DIAG_ROOT']}/ncl_scripts/lat_avg.ncl " +
+                "model_id=\\\"#{ConfigManager.model_id}\\\" " +
+                "case_id=\\\"#{ConfigManager.case_id}\\\" " +
                 "start_lat=#{real_options[:start_lat]} " +
                 "end_lat=#{real_options[:end_lat]} " +
                 "use_wgt_lat=#{real_options[:use_wgt_lat]} " +

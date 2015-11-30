@@ -22,7 +22,7 @@ module ScriniumEsmDiag
         for i in 0..current_pipelines.size-1
           next if current_pipelines[i].first == :inactive
           # 复制一个新的pipeline。
-          current_pipelines << current_pipelines[i].clone
+          current_pipelines << [ :active, current_pipelines[i].last.clone ]
           current_pipelines[i][0] = :inactive
         end
       end
@@ -32,7 +32,11 @@ module ScriniumEsmDiag
     end
 
     def self.create_file_name var, tag, pipeline = nil
-      "#{ConfigManager.model_id}.#{ConfigManager.case_id}.#{var}.#{tag}#{pipeline}.#{ConfigManager.date[:start]}:#{ConfigManager.date[:end]}.nc"
+      if tag == :fixed
+        "#{ConfigManager.model_id}.#{ConfigManager.case_id}.#{var}.nc"
+      else
+        "#{ConfigManager.model_id}.#{ConfigManager.case_id}.#{var}.#{tag}#{pipeline}.#{ConfigManager.date[:start]}:#{ConfigManager.date[:end]}.nc"
+      end
     end
   end
 end

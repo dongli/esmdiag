@@ -1,5 +1,5 @@
 procedure save_to_file(var, var_name, out_path)
-local f, dim_sizes, num_dim, dim_names, dim_unlim, i
+local f, dim_sizes, num_dim, dim, dim_names, dim_unlim, i
 begin
 
   system("rm -rf '" + out_path + "'")

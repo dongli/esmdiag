@@ -2,6 +2,7 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_code.ncl"
 load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
 load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/contributed.ncl"
 
+load "$SCRINIUM_ESM_DIAG_ROOT/ncl_scripts/tools.ncl"
 load "$SCRINIUM_ESM_DIAG_ROOT/ncl_scripts/save_to_file.ncl"
 
 begin
@@ -13,7 +14,7 @@ begin
     use_wgt_lat = True
   end if
 
-  wgt_lat = cos(0.017459*f->lat({start_lat:end_lat}))
+  wgt_lat = get_wgt_lat(model_id, case_id, f->lat({start_lat:end_lat}))
   if (.not. use_wgt_lat) then
     wgt_lat = 1.0
   end if

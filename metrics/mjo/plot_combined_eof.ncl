@@ -2,6 +2,8 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_code.ncl"
 load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_csm.ncl"  
 load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/contributed.ncl" 
 
+load "$SCRINIUM_ESM_DIAG_ROOT/ncl_scripts/tools.ncl"
+
 begin
 
   prefix = model_id + "." + case_id
@@ -156,9 +158,7 @@ begin
   plot = new(3, graphic)
 
   ; 绘制多变量EOF图。
-  res1                   = True
-  res1@gsnDraw           = False
-  res1@gsnFrame          = False
+  res1                   = common_plot_settings()
   res1@gsnScale          = True
   res1@vpHeightF         = 0.40
   res1@vpWidthF          = 0.85
@@ -168,7 +168,6 @@ begin
   res1@xyLineColors      = (/"black","red","blue"/)
   res1@gsnYRefLine       = 0.0
 
-  res1@pmLegendDisplayMode    = "Always"
   res1@pmLegendSide           = "Top"
   res1@pmLegendParallelPosF   = 0.86
   res1@pmLegendOrthogonalPosF = -0.50
@@ -188,7 +187,7 @@ begin
   gsn_panel(wks, plot(0:1), (/2,1/), False)
 
   ; 绘制交叉相关图。
-  res2                   = True
+  res2                   = common_plot_settings()
   res2@gsnDraw           = False
   res2@gsnFrame          = False
   res2@gsnScale          = True
@@ -205,7 +204,7 @@ begin
   frame(wks)
 
   ; 绘制MJO指数图。
-  res3                        = True
+  res3                        = common_plot_settings()
   res3@gsnDraw                = False
   res3@gsnFrame               = False
   res3@gsnScale               = True
@@ -218,7 +217,6 @@ begin
   res3@xyMonoDashPattern      = True
   res3@xyLineColors           = (/"black", "blue"/)
   res3@xyLineThicknesses      = (/1, 2/)
-  res3@pmLegendDisplayMode    = "Always"
   res3@pmLegendWidthF         = 0.12
   res3@pmLegendHeightF        = 0.10
   res3@pmLegendParallelPosF   = 0.86
