@@ -42,7 +42,7 @@ begin
   feedback_nino3 = avg(feedback({lat|start_lat:end_lat},{lon|start_lon_nino3:end_lon_nino3}))
   feedback_nino4 = avg(feedback({lat|start_lat:end_lat},{lon|start_lon_nino4:end_lon_nino4}))
 
-  wks = gsn_open_wks("pdf", prefix + ".NINO.shortwave_feedback")
+  wks = gsn_open_wks("pdf", prefix + "enso.shortwave_feedback")
 
   gsn_define_colormap(wks,"ViBlGrWhYeOrRe")
 

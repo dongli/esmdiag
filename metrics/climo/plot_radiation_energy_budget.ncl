@@ -28,7 +28,7 @@ begin
   diff_climo!1 = "lon"
   diff_climo&lon = lon
 
-  wks = gsn_open_wks("pdf", prefix + ".radiation_energy_budget.climo")
+  wks = gsn_open_wks("pdf", prefix + ".climo.radiation_energy_budget.")
 
   gsn_define_colormap(wks, "amwg")
 

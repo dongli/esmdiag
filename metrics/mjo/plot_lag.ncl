@@ -71,10 +71,10 @@ begin
     opt_plot@txString = case_id + ": " + seasons(i) + " " + start_date + " - " + end_date
     mjo_xcor_lag_ovly_panel(ccr_PRC_lag_lon, ccr_U850_lag_lon, \
                             ccr_PRC_lag_lat, ccr_U850_lag_lat, \
-                            "pdf", ".", prefix + ".lag." + seasons(i), opt_plot)
+                            "pdf", ".", prefix + ".mjo.lag." + seasons(i), opt_plot)
     mjo_xcor_lag_ovly_panel(ccr_PRC_lag_lon_filtered, ccr_U850_lag_lon_filtered, \
                             ccr_PRC_lag_lat_filtered, ccr_U850_lag_lat_filtered, \
-                            "pdf", ".", prefix + ".lag.filtered." + seasons(i), opt_plot)
+                            "pdf", ".", prefix + ".mjo.lag.filtered." + seasons(i), opt_plot)
   end do
 
 end

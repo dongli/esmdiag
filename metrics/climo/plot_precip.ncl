@@ -76,7 +76,7 @@ begin
     diff!1 = "lon"
     diff&lon = lon_mod
 
-    wks = gsn_open_wks("pdf", prefix + ".PRECIP.climo.total." + seasons(i))
+    wks = gsn_open_wks("pdf", prefix + "climo.PRECT." + seasons(i))
 
     gsn_define_colormap(wks, "amwg")
 
@@ -155,7 +155,7 @@ begin
   plot = new(2, graphic)
 
   do i = 0, num_season - 1
-    wks = gsn_open_wks("pdf", prefix + ".PRECIP.climo.ratio." + seasons(i))
+    wks = gsn_open_wks("pdf", prefix + "climo.PRECC_vs_PRECL." + seasons(i))
 
     gsn_define_colormap(wks, "amwg")
 

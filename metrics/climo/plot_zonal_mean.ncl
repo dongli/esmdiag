@@ -70,7 +70,7 @@ begin
     diff!1 = "lat"
     diff&lat = lat_mod
 
-    wks = gsn_open_wks("pdf", prefix + ".T.zonal_mean.climo." + seasons(i))
+    wks = gsn_open_wks("pdf", prefix + ".climo.zonal_mean.T." + seasons(i))
 
     gsn_define_colormap(wks, "amwg")
 
@@ -142,7 +142,7 @@ begin
     diff!1 = "lat"
     diff&lat = lat_mod
 
-    wks = gsn_open_wks("pdf", prefix + ".U.zonal_mean.climo." + seasons(i))
+    wks = gsn_open_wks("pdf", prefix + ".climo.zonal_mean.U." + seasons(i))
 
     gsn_define_colormap(wks, "amwg")
 
@@ -219,7 +219,7 @@ begin
     diff!1 = "lat"
     diff&lat = lat_mod
 
-    wks = gsn_open_wks("pdf", prefix + ".Q.zonal_mean.climo." + seasons(i))
+    wks = gsn_open_wks("pdf", prefix + ".climo.zonal_mean.Q." + seasons(i))
 
     gsn_define_colormap(wks, "amwg")
 

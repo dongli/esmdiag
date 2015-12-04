@@ -74,7 +74,7 @@ begin
 
   res_panel = common_panel_settings()
 
-  wks = gsn_open_wks("pdf", prefix + ".mean_state.summer")
+  wks = gsn_open_wks("pdf", prefix + "mjo.mean_state.summer")
 
   gsn_define_colormap(wks, "amwg")
 
@@ -85,7 +85,7 @@ begin
   res_panel@txString = case_id + ": summer " + start_date + " - " + end_date
   gsn_panel(wks, plots, (/dimsizes(plots),1/), res_panel)
 
-  wks = gsn_open_wks("pdf", prefix + ".mean_state.winter")
+  wks = gsn_open_wks("pdf", prefix + "mjo.mean_state.winter")
 
   gsn_define_colormap(wks, "amwg")
 

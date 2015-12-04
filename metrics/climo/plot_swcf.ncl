@@ -71,7 +71,7 @@ begin
     diff!1 = "lon"
     diff&lon = lon_mod
 
-    wks = gsn_open_wks("pdf", prefix + ".SWCF.climo." + seasons(i))
+    wks = gsn_open_wks("pdf", prefix + ".climo.SWCF." + seasons(i))
 
     gsn_define_colormap(wks, "amwg")
 

@@ -153,7 +153,7 @@ begin
   f->PC2       = PC2
 
   ; 绘图。
-  wks = gsn_open_wks("pdf", prefix + ".mjo_index")
+  wks = gsn_open_wks("pdf", prefix + ".mjo.index")
 
   plot = new(3, graphic)
 

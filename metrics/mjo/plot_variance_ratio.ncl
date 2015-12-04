@@ -84,7 +84,7 @@ begin
 
   res_panel = common_panel_settings()
 
-  wks = gsn_open_wks("pdf", prefix + ".variance_ratio.summer")
+  wks = gsn_open_wks("pdf", prefix + "mjo.variance_ratio.summer")
 
   gsn_define_colormap(wks, "amwg")
 
@@ -94,7 +94,7 @@ begin
   res_panel@txString = case_id + ": summer " + start_date + " - " + end_date
   gsn_panel(wks, plots, (/dimsizes(plots),1/), res_panel)
 
-  wks = gsn_open_wks("pdf", prefix + ".variance_ratio.winter")
+  wks = gsn_open_wks("pdf", prefix + "mjo.variance_ratio.winter")
 
   gsn_define_colormap(wks, "amwg")
 
