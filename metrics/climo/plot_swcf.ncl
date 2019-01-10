@@ -3,7 +3,7 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/contributed.ncl"
 load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
 load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/shea_util.ncl"
 
-load "$SCRINIUM_ESM_DIAG_ROOT/ncl_scripts/tools.ncl"
+load "$ESMDIAG_ROOT/ncl_scripts/tools.ncl"
 
 begin
 
@@ -31,15 +31,15 @@ begin
   SWCF_mod_climo(2,:,:) = rm_single_dims(month_to_season(tmp, "DJF"))
   delete(tmp)
 
-  f = addfile("$SCRINIUM_ESM_DIAG_ROOT/obs/data/CERES_ANN_climo.nc", "r")
+  f = addfile("$ESMDIAG_ROOT/obs/data/CERES_ANN_climo.nc", "r")
   SWCF_obs_ANN = rm_single_dims(f->SWCF)
   lat_obs = f->lat
   lon_obs = f->lon
 
-  f = addfile("$SCRINIUM_ESM_DIAG_ROOT/obs/data/CERES_JJA_climo.nc", "r")
+  f = addfile("$ESMDIAG_ROOT/obs/data/CERES_JJA_climo.nc", "r")
   SWCF_obs_JJA = rm_single_dims(f->SWCF)
 
-  f = addfile("$SCRINIUM_ESM_DIAG_ROOT/obs/data/CERES_DJF_climo.nc", "r")
+  f = addfile("$ESMDIAG_ROOT/obs/data/CERES_DJF_climo.nc", "r")
   SWCF_obs_DJF = rm_single_dims(f->SWCF)
 
   SWCF_obs_climo_i = new((/num_season,num_lat_mod,num_lon_mod/), typeof(SWCF_mod))
@@ -89,7 +89,7 @@ begin
     res_plot@cnLevels = (/-120,-100,-80,-60,-40,-20,-10,0,10,20,40,60,80,100,120/)
     plot(2) = gsn_csm_contour_map_ce(wks, diff, res_plot)
 
-    res_panel@txString = case_id + ": " + seasons(i) + " " + start_date + " - " + end_date
+    res_panel@gsnPanelMainString = case_id + ": " + seasons(i) + " " + start_date + " - " + end_date
     gsn_panel(wks, plot, (/3,1/), res_panel)
   end do
 

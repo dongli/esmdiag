@@ -3,7 +3,7 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/contributed.ncl"
 load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
 load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/shea_util.ncl"
 
-load "$SCRINIUM_ESM_DIAG_ROOT/ncl_scripts/tools.ncl"
+load "$ESMDIAG_ROOT/ncl_scripts/tools.ncl"
 
 begin
 

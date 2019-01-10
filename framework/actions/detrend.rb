@@ -1,4 +1,4 @@
-module ScriniumEsmDiag
+module EsmDiag
   class Actions
     def self.detrend_accepted_options
       { :dim => Integer }

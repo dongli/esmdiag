@@ -1,4 +1,4 @@
-module ScriniumEsmDiag
+module EsmDiag
   def self.run command
     CLI.blue_arrow command
     system command
@@ -7,9 +7,9 @@ module ScriniumEsmDiag
 end
 
 def cdo *args
-  ScriniumEsmDiag.run "cdo --history #{args.join}"
+  EsmDiag.run "cdo --history #{args.join}"
 end
 
 def ncl *args
-  ScriniumEsmDiag.run "ncl -Q #{args.join.gsub('=true', '=True').gsub('=false', '=False')}"
+  EsmDiag.run "ncl -Q #{args.join.gsub('=true', '=True').gsub('=false', '=False')}"
 end

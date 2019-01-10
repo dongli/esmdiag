@@ -2,7 +2,7 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_code.ncl"
 load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
 load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/contributed.ncl"
 
-load "$SCRINIUM_ESM_DIAG_ROOT/ncl_scripts/save_to_file.ncl"
+load "$ESMDIAG_ROOT/ncl_scripts/save_to_file.ncl"
 
 begin
 

@@ -1,4 +1,4 @@
-module ScriniumEsmDiag
+module EsmDiag
   class Actions
     def self.filter_accepted_options
       { :method => Symbol, :low_pass => Numeric, :high_pass => Numeric, :delete_input => [ TrueClass, FalseClass ] }

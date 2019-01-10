@@ -8,13 +8,16 @@ begin
   res@gsnSpreadColors = True
 
   ; 字体大小
-  res@gsnStringFontHeightF = 0.025
-  res@tmXTLabelFontHeightF = 0.02
-  res@tmXBLabelFontHeightF = 0.02
-  res@tmYLLabelFontHeightF = 0.02
-  res@tmYRLabelFontHeightF = 0.02
-  res@lbLabelFontHeightF = 0.02
-  res@lbTitleFontHeightF = 0.02
+  res@txFontHeightF = 0.02
+  res@gsnPanelMainStringFontHeightF = 0.02
+  res@tiMainFontHeightF = 0.01
+  res@gsnStringFontHeightF = 0.01
+  res@tmXTLabelFontHeightF = 0.01
+  res@tmXBLabelFontHeightF = 0.01
+  res@tmYLLabelFontHeightF = 0.01
+  res@tmYRLabelFontHeightF = 0.01
+  res@lbLabelFontHeightF = 0.01
+  res@lbTitleFontHeightF = 0.01
   res@cnLineLabelFontHeightF = 0.018
 
   ; 坐标刻度

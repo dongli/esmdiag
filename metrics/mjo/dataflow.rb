@@ -1,4 +1,4 @@
-module ScriniumEsmDiag
+module EsmDiag
   class Dataflow_mjo < Dataflow
     create_dataset :atm, :monthly do
       requires :PS, :OLR, :PRC, :U, :V

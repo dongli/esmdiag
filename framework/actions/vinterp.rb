@@ -1,4 +1,4 @@
-module ScriniumEsmDiag
+module EsmDiag
   class Actions
     def self.vinterp_accepted_options
       { :on => Array, :interp_type => Symbol, :extrap => [ TrueClass, FalseClass ], :delete_input => [ TrueClass, FalseClass ] }
@@ -15,7 +15,7 @@ module ScriniumEsmDiag
           if not Cache.already_generated? output_file_name
             interp_type = options[:interp_type] ? { :linear => 1, :log => 2, :loglog => 3 }[options[:interp_type]] : 1
             extrap = options[:extrap] ? 'True' : 'False'
-            ncl_script = "#{ENV['SCRINIUM_ESM_DIAG_ROOT']}/ncl_scripts/models/#{ConfigManager.model_id.downcase}/vinterp.ncl"
+            ncl_script = "#{ENV['ESMDIAG_ROOT']}/ncl_scripts/models/#{ConfigManager.model_id.downcase}/vinterp.ncl"
             if File.exist? ncl_script
               ncl "#{ncl_script} " +
                 "ps_path=\\\"#{ps_path}\\\" " +
@@ -26,7 +26,7 @@ module ScriniumEsmDiag
                 "extrap=#{extrap} "+
                 "out_path=\\\"#{output_file_name}\\\""
             else
-              CLI.report_error "Under construction!"
+              CLI.under_construction
             end
             Cache.save_pipeline output_file_name
           end

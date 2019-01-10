@@ -3,7 +3,7 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/contributed.ncl"
 load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
 load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/shea_util.ncl"
 
-load "$SCRINIUM_ESM_DIAG_ROOT/ncl_scripts/tools.ncl"
+load "$ESMDIAG_ROOT/ncl_scripts/tools.ncl"
 
 begin
 
@@ -31,15 +31,15 @@ begin
   LWCF_mod_climo(2,:,:) = rm_single_dims(month_to_season(tmp, "DJF"))
   delete(tmp)
 
-  f = addfile("$SCRINIUM_ESM_DIAG_ROOT/obs/data/CERES_ANN_climo.nc", "r")
+  f = addfile("$ESMDIAG_ROOT/obs/data/CERES_ANN_climo.nc", "r")
   LWCF_obs_ANN = rm_single_dims(f->LWCF)
   lat_obs = f->lat
   lon_obs = f->lon
 
-  f = addfile("$SCRINIUM_ESM_DIAG_ROOT/obs/data/CERES_JJA_climo.nc", "r")
+  f = addfile("$ESMDIAG_ROOT/obs/data/CERES_JJA_climo.nc", "r")
   LWCF_obs_JJA = rm_single_dims(f->LWCF)
 
-  f = addfile("$SCRINIUM_ESM_DIAG_ROOT/obs/data/CERES_DJF_climo.nc", "r")
+  f = addfile("$ESMDIAG_ROOT/obs/data/CERES_DJF_climo.nc", "r")
   LWCF_obs_DJF = rm_single_dims(f->LWCF)
 
   LWCF_obs_climo_i = new((/num_season,num_lat_mod,num_lon_mod/), typeof(LWCF_mod))

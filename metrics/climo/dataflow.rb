@@ -1,4 +1,4 @@
-module ScriniumEsmDiag
+module EsmDiag
   class Dataflow_climo < Dataflow
     create_dataset :atm, :monthly do
       requires :PS, :PRECC, :PRECL, :PRECT, :SWCF, :LWCF, :U, :V, :T, :Q, :FLUT, :FSNTOA

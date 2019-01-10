@@ -1,4 +1,4 @@
-module ScriniumEsmDiag
+module EsmDiag
   class Diagflow_mjo < Diagflow
     create_figure :mean_state
     create_figure :variance_ratio

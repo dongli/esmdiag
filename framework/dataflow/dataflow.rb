@@ -1,14 +1,14 @@
-module ScriniumEsmDiag
+module EsmDiag
   class Dataflow
     include DataflowDSL
 
     attr_reader :datasets
 
     def initialize
-      metric = self.class.to_s.gsub(/ScriniumEsmDiag::Dataflow_/, '')
+      metric = self.class.to_s.gsub(/EsmDiag::Dataflow_/, '')
       eval "@datasets = @@datasets_#{metric}"
       # 提取一些额外固定变量。
-      ScriniumEsmDiag.attached_variables.each do |comp, vars|
+      EsmDiag.attached_variables.each do |comp, vars|
         dataset = Dataset.new
         dataset.extract *vars
         @datasets[comp][:fixed] = dataset
@@ -16,7 +16,9 @@ module ScriniumEsmDiag
       @datasets.each do |comp, tags|
         tags.each do |tag, dataset|
           if not dataset.root
-            if ConfigManager.model_data[comp][tag].has_key? :root
+            CLI.report_error "No #{comp} in model_data!" if not ConfigManager.model_data.has_key? comp
+            CLI.report_error "No #{tag} in model_data->#{comp}!" if not ConfigManager.model_data[comp].has_key? tag
+            if ConfigManager.model_data[comp].has_key? tag and ConfigManager.model_data[comp][tag].has_key? :root
               dataset.root = ConfigManager.model_data[comp][tag][:root]
             else
               dataset.root = ConfigManager.model_data[comp][:root]

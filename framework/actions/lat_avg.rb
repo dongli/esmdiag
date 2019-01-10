@@ -1,4 +1,4 @@
-module ScriniumEsmDiag
+module EsmDiag
   class Actions
     def self.lat_avg_accepted_options
       { :start_lat => Numeric, :end_lat => Numeric }

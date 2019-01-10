@@ -1,4 +1,4 @@
-module ScriniumEsmDiag
+module EsmDiag
   def self.attached_variables
     return @@attached_variables if defined? @@attached_variables
     @@attached_variables = {}
@@ -6,13 +6,13 @@ module ScriniumEsmDiag
     ConfigManager.model_data.each do |comp, config|
       @@attached_variables[comp] = []
       if ConfigManager.model_data[comp].has_key? :fixed
-        case ConfigManager.model_data[comp][:fixed][:mesh]
+        case ConfigManager.model_data[comp][:mesh].to_sym
         when :lat_lon
-          if ConfigManager.model_data[comp][:fixed].include? :weight
-            tmp = ConfigManager.model_data[comp][:fixed][:weight][:lon]
-            @@attached_variables[comp] << tmp if tmp
-            tmp = ConfigManager.model_data[comp][:fixed][:weight][:lat]
-            @@attached_variables[comp] << tmp if tmp
+          if ConfigManager.model_data[comp][:fixed].include? :wgt_lon
+            @@attached_variables[comp] << ConfigManager.model_data[comp][:fixed][:wgt_lon]
+          end
+          if ConfigManager.model_data[comp][:fixed].include? :wgt_lat
+            @@attached_variables[comp] << ConfigManager.model_data[comp][:fixed][:wgt_lat]
           end
         end
       end

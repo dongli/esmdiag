@@ -1,4 +1,4 @@
-module ScriniumEsmDiag
+module EsmDiag
   class Actions
     def self.extract_accepted_options
       { :into_single_file => nil, :into_multiple_files => nil }
@@ -17,7 +17,7 @@ module ScriniumEsmDiag
               "enddate=#{ConfigManager.date[:end]} " +
               "#{dataset.data_list} #{output_file_name}"
         end
-        ScriniumEsmDiag.run "ncrename -O -h -v #{old_name},#{var} #{output_file_name}"
+        EsmDiag.run "ncrename -O -h -v #{old_name},#{var} #{output_file_name}"
       else
         if tag == :fixed
           cdo "select,name=#{var} #{dataset.data_list} #{output_file_name}"

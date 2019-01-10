@@ -1,16 +1,16 @@
-module ScriniumEsmDiag
+module EsmDiag
   class ConfigManager
-    PermittedKeys = %W[
-      model_id
-      case_id
-      model_data
-      date
-      use_metrics
-    ].freeze
+    PermittedKeys = {
+      :model_id => nil,
+      :case_id => nil,
+      :model_data => {},
+      :date => {},
+      :use_metrics => []
+    }.freeze
 
     def self.init
-      PermittedKeys.each do |key|
-        class_eval "@@#{key} = nil"
+      PermittedKeys.each do |key, default|
+        class_eval "@@#{key} = default"
         class_eval "def self.#{key}=(value); @@#{key} = value; end"
         class_eval "def self.#{key}; @@#{key}; end"
       end
@@ -18,7 +18,7 @@ module ScriniumEsmDiag
 
     def self.parse config_path
       config = File.open(config_path).read
-      PermittedKeys.each do |key|
+      PermittedKeys.each_key do |key|
         config.gsub!(/^ *#{key} *=/, "self.#{key}=")
       end
       begin

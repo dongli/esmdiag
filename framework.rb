@@ -1,4 +1,4 @@
-$LOAD_PATH << "#{ENV['SCRINIUM_ESM_DIAG_ROOT']}/framework"
+$LOAD_PATH << "#{ENV['ESMDIAG_ROOT']}/framework"
 
 require 'pp'
 require 'digest'
@@ -33,4 +33,4 @@ require 'diagflow/diagflow_dsl'
 require 'diagflow/diagflow'
 require 'diagflow/diagflow_manager'
 
-ScriniumEsmDiag::ConfigManager.init
+EsmDiag::ConfigManager.init

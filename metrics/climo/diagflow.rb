@@ -1,4 +1,4 @@
-module ScriniumEsmDiag
+module EsmDiag
   class Diagflow_climo < Diagflow
     create_figure :precip
     create_figure :swcf

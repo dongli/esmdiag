@@ -1,4 +1,4 @@
-module ScriniumEsmDiag
+module EsmDiag
   class Dataset
     attr_accessor :root, :pattern, :data_list
     attr_reader :variables
@@ -21,7 +21,7 @@ module ScriniumEsmDiag
       end
     end
 
-    Dir.glob("#{ENV['SCRINIUM_ESM_DIAG_ROOT']}/framework/actions/*.rb").map { |x| File.basename(x, File.extname(x)) }.each do |action|
+    Dir.glob("#{ENV['ESMDIAG_ROOT']}/framework/actions/*.rb").map { |x| File.basename(x, File.extname(x)) }.each do |action|
       if Actions.respond_to? :"#{action}_accepted_options"
         options = Actions.send(:"#{action}_accepted_options")
       else
@@ -40,11 +40,12 @@ module ScriniumEsmDiag
                 input_options[arg] = true
               elsif not input_options.empty?
                 raise 'options should be put at last!'
-              elsif arg.class == Symbol
-                vars << arg
+              elsif arg.class == Symbol or arg.class == String
+                vars << arg.to_sym
               end
             end
             vars.each do |var|
+              var = var.to_sym
               if var == :all
                 raise 'no variable is required yet!' if @variables.empty?
                 #{action} *@variables.keys, input_options
@@ -55,6 +56,7 @@ module ScriniumEsmDiag
             end
           else
             args.each do |var|
+              var = var.to_sym
               if var == :all
                 raise 'no variable is required yet!' if @variables.empty?
                 #{action} *@variables.keys

@@ -1,4 +1,4 @@
-module ScriniumEsmDiag
+module EsmDiag
   class Figure
   end
 end

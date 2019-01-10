@@ -3,7 +3,7 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/contributed.ncl"
 load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
 load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/shea_util.ncl"
 
-load "$SCRINIUM_ESM_DIAG_ROOT/ncl_scripts/tools.ncl"
+load "$ESMDIAG_ROOT/ncl_scripts/tools.ncl"
 
 begin
 
@@ -35,15 +35,15 @@ begin
   PRECT_mod_climo(2,:,:) = rm_single_dims(month_to_season(tmp, "DJF"))
   delete(tmp)
 
-  f = addfile("$SCRINIUM_ESM_DIAG_ROOT/obs/data/XIEARKIN_ANN_climo.nc", "r")
+  f = addfile("$ESMDIAG_ROOT/obs/data/XIEARKIN_ANN_climo.nc", "r")
   PRECT_obs_ANN = rm_single_dims(f->PRECT)
   lat_obs = f->lat
   lon_obs = f->lon
 
-  f = addfile("$SCRINIUM_ESM_DIAG_ROOT/obs/data/XIEARKIN_JJA_climo.nc", "r")
+  f = addfile("$ESMDIAG_ROOT/obs/data/XIEARKIN_JJA_climo.nc", "r")
   PRECT_obs_JJA = rm_single_dims(f->PRECT)
 
-  f = addfile("$SCRINIUM_ESM_DIAG_ROOT/obs/data/XIEARKIN_DJF_climo.nc", "r")
+  f = addfile("$ESMDIAG_ROOT/obs/data/XIEARKIN_DJF_climo.nc", "r")
   PRECT_obs_DJF = rm_single_dims(f->PRECT)
 
   ; 选择将观测插值到模式格点？

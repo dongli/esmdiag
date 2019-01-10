@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require "#{ENV['ESMDIAG_ROOT']}/framework"
+
+EsmDiag::ConfigManager.parse ARGV[0]
+
+EsmDiag::Cache.read
+EsmDiag::DataflowManager.run
+EsmDiag::DiagflowManager.run
+EsmDiag::Cache.write

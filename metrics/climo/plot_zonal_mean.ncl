@@ -3,7 +3,7 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/contributed.ncl"
 load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
 load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/shea_util.ncl"
 
-load "$SCRINIUM_ESM_DIAG_ROOT/ncl_scripts/tools.ncl"
+load "$ESMDIAG_ROOT/ncl_scripts/tools.ncl"
 
 prefix = model_id + "." + case_id
 suffix = start_date + ":" + end_date + ".nc"
@@ -44,14 +44,14 @@ begin
   T_mod_zonal_mean_climo(1,:,:) = (/rm_single_dims(month_to_season(tmp, "JJA"))/)
   T_mod_zonal_mean_climo(2,:,:) = (/rm_single_dims(month_to_season(tmp, "DJF"))/)
  
-  f = addfile("$SCRINIUM_ESM_DIAG_ROOT/obs/data/ECMWF_ANN_climo.nc", "r")
+  f = addfile("$ESMDIAG_ROOT/obs/data/ECMWF_ANN_climo.nc", "r")
   T_obs_zonal_mean_ANN = rm_single_dims(zonalAve(f->T))
   lat_obs = f->lat
 
-  f = addfile("$SCRINIUM_ESM_DIAG_ROOT/obs/data/ECMWF_JJA_climo.nc", "r")
+  f = addfile("$ESMDIAG_ROOT/obs/data/ECMWF_JJA_climo.nc", "r")
   T_obs_zonal_mean_JJA = rm_single_dims(zonalAve(f->T))
 
-  f = addfile("$SCRINIUM_ESM_DIAG_ROOT/obs/data/ECMWF_DJF_climo.nc", "r")
+  f = addfile("$ESMDIAG_ROOT/obs/data/ECMWF_DJF_climo.nc", "r")
   T_obs_zonal_mean_DJF = rm_single_dims(zonalAve(f->T))
 
   ; TODO: 比较两种网格哪个密一些，将密的插值到疏的。
@@ -116,14 +116,14 @@ begin
   U_mod_zonal_mean_climo(1,:,:) = (/rm_single_dims(month_to_season(tmp, "JJA"))/)
   U_mod_zonal_mean_climo(2,:,:) = (/rm_single_dims(month_to_season(tmp, "DJF"))/)
 
-  f = addfile("$SCRINIUM_ESM_DIAG_ROOT/obs/data/ECMWF_ANN_climo.nc", "r")
+  f = addfile("$ESMDIAG_ROOT/obs/data/ECMWF_ANN_climo.nc", "r")
   U_obs_zonal_mean_ANN = rm_single_dims(zonalAve(f->U))
   lat_obs = f->lat
 
-  f = addfile("$SCRINIUM_ESM_DIAG_ROOT/obs/data/ECMWF_JJA_climo.nc", "r")
+  f = addfile("$ESMDIAG_ROOT/obs/data/ECMWF_JJA_climo.nc", "r")
   U_obs_zonal_mean_JJA = rm_single_dims(zonalAve(f->U))
 
-  f = addfile("$SCRINIUM_ESM_DIAG_ROOT/obs/data/ECMWF_DJF_climo.nc", "r")
+  f = addfile("$ESMDIAG_ROOT/obs/data/ECMWF_DJF_climo.nc", "r")
   U_obs_zonal_mean_DJF = rm_single_dims(zonalAve(f->U))
 
   ; TODO: 比较两种网格哪个密一些，将密的插值到疏的。
@@ -193,14 +193,14 @@ begin
   Q_mod_zonal_mean_climo(2,:,:) = (/rm_single_dims(month_to_season(tmp, "DJF"))/)
   delete(tmp)
 
-  f = addfile("$SCRINIUM_ESM_DIAG_ROOT/obs/data/ECMWF_ANN_climo.nc", "r")
+  f = addfile("$ESMDIAG_ROOT/obs/data/ECMWF_ANN_climo.nc", "r")
   Q_obs_zonal_mean_ANN = rm_single_dims(zonalAve(f->SHUM))
   lat_obs = f->lat
 
-  f = addfile("$SCRINIUM_ESM_DIAG_ROOT/obs/data/ECMWF_JJA_climo.nc", "r")
+  f = addfile("$ESMDIAG_ROOT/obs/data/ECMWF_JJA_climo.nc", "r")
   Q_obs_zonal_mean_JJA = rm_single_dims(zonalAve(f->SHUM))
 
-  f = addfile("$SCRINIUM_ESM_DIAG_ROOT/obs/data/ECMWF_DJF_climo.nc", "r")
+  f = addfile("$ESMDIAG_ROOT/obs/data/ECMWF_DJF_climo.nc", "r")
   Q_obs_zonal_mean_DJF = rm_single_dims(zonalAve(f->SHUM))
 
   ; TODO: 比较两种网格哪个密一些，将密的插值到疏的。

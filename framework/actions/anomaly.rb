@@ -1,4 +1,4 @@
-module ScriniumEsmDiag
+module EsmDiag
   class Actions
     def self.anomaly_accepted_options
       { :delete_input => [ TrueClass, FalseClass ] }

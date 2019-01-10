@@ -1,4 +1,4 @@
-module ScriniumEsmDiag
+module EsmDiag
   module ActionHelpers
     def self.start previous_pipelines, options
       action_name = caller_locations(1,1)[0].label

@@ -1,4 +1,4 @@
-module ScriniumEsmDiag
+module EsmDiag
   class Dataflow_enso < Dataflow
     create_dataset :atm, :monthly do
       requires :FSNS, :FSNSC, :PRECT, :PRECC, :PRECL

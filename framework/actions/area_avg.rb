@@ -1,4 +1,4 @@
-module ScriniumEsmDiag
+module EsmDiag
   class Actions
     def self.area_avg_accepted_options
       { :start_lon => Numeric, :end_lon => Numeric, :start_lat => Numeric, :end_lat => Numeric }
