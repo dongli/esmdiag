@@ -19,5 +19,9 @@ module EsmDiag
         :extrap => false
       }
     end
+    create_dataset :ice, :monthly do
+      requires :aice, :hi
+      extract :all
+    end
   end
 end

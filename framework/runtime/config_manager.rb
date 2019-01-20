@@ -1,34 +1,38 @@
 module EsmDiag
   class ConfigManager
+    DatasetSpec = { root: nil, pattern: nil }.freeze
+
     PermittedKeys = {
-      :model_id => nil,
-      :case_id => nil,
-      :model_data => {},
-      :date => {},
-      :use_metrics => []
+      model_info: {
+        id: nil,
+        atm: { id: nil, grid: nil, fixed: nil },
+        lnd: { id: nil, grid: nil, fixed: nil },
+        ocn: { id: nil, grid: nil, fixed: nil },
+        ice: { id: nil, grid: nil, fixed: nil }
+      },
+      case_info: { id: nil },
+      model_data_info: {
+        root: nil,
+        atm: { root: nil, monthly: DatasetSpec, daily: DatasetSpec },
+        lnd: { root: nil, monthly: DatasetSpec, daily: DatasetSpec },
+        ocn: { root: nil, monthly: DatasetSpec, daily: DatasetSpec },
+        ice: { root: nil, monthly: DatasetSpec, daily: DatasetSpec }
+      },
+      date: { start: nil, end: nil },
+      use_metrics: []
     }.freeze
 
-    def self.init
-      PermittedKeys.each do |key, default|
-        class_eval "@@#{key} = default"
-        class_eval "def self.#{key}=(value); @@#{key} = value; end"
-        class_eval "def self.#{key}; @@#{key}; end"
+    PermittedKeys.each_key do |key|
+      self.class.send(:define_method, key) do
+        @@item.send key
       end
     end
 
     def self.parse config_path
-      config = File.open(config_path).read
-      PermittedKeys.each_key do |key|
-        config.gsub!(/^ *#{key} *=/, "self.#{key}=")
-      end
-      begin
-        class_eval config
-      rescue SyntaxError => e
-        CLI.report_error "Failed to parse #{CLI.red config_path}!\n#{e}"
-      end
-      # 为了方便比较时间，将日期字符串变为Date对象。
-      date[:start] = Date.parse(date[:start]) if date.has_key? :start
-      date[:end] = Date.parse(date[:end]) if date.has_key? :end
+      config = JSON.parse(File.open(config_path).read)
+      @@item = ConfigItem.new PermittedKeys, config
+      @@item.date.start = Date.parse(@@item.date.start)
+      @@item.date.end = Date.parse(@@item.date.end)
     end
   end
 end

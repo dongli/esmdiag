@@ -31,11 +31,11 @@ module EsmDiag
       current_pipelines
     end
 
-    def self.create_file_name var, tag, pipeline = nil
+    def self.create_file_name comp, var, tag, pipeline = nil
       if tag == :fixed
-        "#{ConfigManager.model_id}.#{ConfigManager.case_id}.#{var}.nc"
+        "#{ConfigManager.model_info[comp][:id]}.#{ConfigManager.case_info.id}.#{var}.nc"
       else
-        "#{ConfigManager.model_id}.#{ConfigManager.case_id}.#{var}.#{tag}#{pipeline}.#{ConfigManager.date[:start]}:#{ConfigManager.date[:end]}.nc"
+        "#{ConfigManager.model_info[comp][:id]}.#{ConfigManager.case_info.id}.#{var}.#{tag}#{pipeline}.#{ConfigManager.date.start}:#{ConfigManager.date.end}.nc"
       end
     end
   end

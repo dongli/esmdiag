@@ -5,7 +5,7 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/shea_util.ncl"
 
 load "$ESMDIAG_ROOT/ncl_scripts/tools.ncl"
 
-prefix = model_id + "." + case_id
+prefix = model_atm_id + "." + case_id
 suffix = start_date + ":" + end_date + ".nc"
 
 seasons = (/"ANN","JJA","DJF"/)
@@ -76,14 +76,14 @@ begin
 
     res_plot@gsnRightString = "temperature"
 
-    res_plot@gsnLeftString = model_id
+    res_plot@gsnLeftString = model_atm_id + "@" + model_id 
     res_plot@cnLevels = (/180,185,190,200,210,220,230,240,250,260,270,280,290,295,300/)
     plot(0) = gsn_csm_pres_hgt(wks, T_mod_zonal_mean_climo(i,:,:), res_plot)
 
     res_plot@gsnLeftString = "ECMWF"
     plot(1) = gsn_csm_pres_hgt(wks, T_obs_zonal_mean_climo_i(i,:,:), res_plot)
 
-    res_plot@gsnLeftString = model_id + " - ECMWF"
+    res_plot@gsnLeftString = model_atm_id + "@" + model_id + " - ECMWF"
     res_plot@cnLevels = (/-9,-7,-5,-4,-3,-2,-1,0,1,2,3,4,5,7,9/)
     plot(2) = gsn_csm_pres_hgt(wks, diff, res_plot)
 
@@ -148,14 +148,14 @@ begin
 
     res_plot@gsnRightString = "zonal wind"
 
-    res_plot@gsnLeftString = model_id
+    res_plot@gsnLeftString = model_atm_id + "@" + model_id 
     res_plot@cnLevels = (/-20,-15,-10,-5,0,5,10,15,20,25,30,40,50,60,70/)
     plot(0) = gsn_csm_pres_hgt(wks, U_mod_zonal_mean_climo(i,:,:), res_plot)
 
     res_plot@gsnLeftString = "ECMWF"
     plot(1) = gsn_csm_pres_hgt(wks, U_obs_zonal_mean_climo_i(i,:,:), res_plot)
 
-    res_plot@gsnLeftString = model_id + " - ECMWF"
+    res_plot@gsnLeftString = model_atm_id + "@" + model_id + " - ECMWF"
     res_plot@cnLevels = (/-18,-15,-12,-9,-6,-3,-1,0,1,3,6,9,12,15,18/)
     plot(2) = gsn_csm_pres_hgt(wks, diff, res_plot)
 
@@ -225,14 +225,14 @@ begin
 
     res_plot@gsnRightString = "specific humidity"
 
-    res_plot@gsnLeftString = model_id
+    res_plot@gsnLeftString = model_atm_id + "@" + model_id 
     res_plot@cnLevels = (/1,2,3,4,5,6,7,8,9,10,11,12,13,14,15/)
     plot(0) = gsn_csm_pres_hgt(wks, Q_mod_zonal_mean_climo(i,:,:), res_plot)
 
     res_plot@gsnLeftString = "ECMWF"
     plot(1) = gsn_csm_pres_hgt(wks, Q_obs_zonal_mean_climo_i(i,:,:), res_plot)
 
-    res_plot@gsnLeftString = model_id + " - ECMWF"
+    res_plot@gsnLeftString = model_atm_id + "@" + model_id + " - ECMWF"
     delete(res_plot@cnLevels)
     res_plot@cnLevels = (/-1.8,-1.5,-1.2,-.9,-.6,-.3,-.1,0,.1,.3,.6,.9,1.2,1.5,1.8/)
     plot(2) = gsn_csm_pres_hgt(wks, diff, res_plot)

@@ -7,7 +7,7 @@ load "$ESMDIAG_ROOT/ncl_scripts/tools.ncl"
 
 begin
 
-  prefix = model_id + "." + case_id
+  prefix = model_atm_id + "." + case_id
   suffix = start_date + ":" + end_date + ".nc"
 
   seasons = (/"ANN","JJA","DJF"/)
@@ -53,7 +53,7 @@ begin
   PRECT_obs_climo_i(1,:,:) = linint2(lon_obs, lat_obs, PRECT_obs_JJA, True, lon_mod, lat_mod, 0)
   PRECT_obs_climo_i(2,:,:) = linint2(lon_obs, lat_obs, PRECT_obs_DJF, True, lon_mod, lat_mod, 0)
 
-  wgt_lat = get_wgt_lat(model_id, case_id, lat_mod)
+  wgt_lat = get_wgt_lat(model_atm_id, case_id, lat_mod)
 
   res_plot = common_plot_settings()
   res_plot@cnLinesOn = False
@@ -76,11 +76,11 @@ begin
     diff!1 = "lon"
     diff&lon = lon_mod
 
-    wks = gsn_open_wks("pdf", prefix + "climo.PRECT." + seasons(i))
+    wks = gsn_open_wks("pdf", prefix + ".climo.PRECT." + seasons(i))
 
     gsn_define_colormap(wks, "amwg")
 
-    res_plot@gsnLeftString = model_id
+    res_plot@gsnLeftString = model_atm_id + "@" + model_id
     res_plot@gsnRightString = "MEAN = " + sprintf("%4.2f", wgt_areaave(PRECT_mod_climo(i,:,:), wgt_lat, 1, 0))
     res_plot@cnLevels=(/0.2,0.5,1,2,3,4,5,6,7,8,9,10,12,14,17/)
     plot(0) = gsn_csm_contour_map_ce(wks, PRECT_mod_climo(i,:,:), res_plot)
@@ -89,7 +89,7 @@ begin
     res_plot@gsnRightString = "MEAN = " + sprintf("%4.2f", wgt_areaave(PRECT_obs_climo_i(i,:,:), wgt_lat, 1, 0))
     plot(1) = gsn_csm_contour_map_ce(wks, PRECT_obs_climo_i(i,:,:), res_plot)
 
-    res_plot@gsnLeftString = model_id
+    res_plot@gsnLeftString = model_atm_id + "@" + model_id + " - XIE-ARKIN"
     res_plot@gsnRightString = "RMSE = "+sprintf("%4.2f", sqrt(wgt_areaave(diff^2, wgt_lat, 1, 0)))
     res_plot@cnLevels = (/-8,-6,-4,-3,-2,-1,-0.5,0,0.5,1,2,3,4,6,8/)
     plot(2) = gsn_csm_contour_map_ce(wks, diff, res_plot)
@@ -155,16 +155,16 @@ begin
   plot = new(2, graphic)
 
   do i = 0, num_season - 1
-    wks = gsn_open_wks("pdf", prefix + "climo.PRECC_vs_PRECL." + seasons(i))
+    wks = gsn_open_wks("pdf", prefix + ".climo.PRECC_vs_PRECL." + seasons(i))
 
     gsn_define_colormap(wks, "amwg")
 
-    res_plot@gsnLeftString = model_id
+    res_plot@gsnLeftString = model_atm_id + "@" + model_id
     res_plot@gsnRightString = "convective ratio"
     res_plot@cnLevels= fspan(60, 80, 11)
     plot(0) = gsn_csm_contour_map_ce(wks, PRECC_mod_climo_ratio(i,:,:), res_plot)
 
-    res_plot@gsnLeftString = model_id
+    res_plot@gsnLeftString = model_atm_id + "@" + model_id
     res_plot@gsnRightString = "stratiform ratio"
     res_plot@cnLevels= fspan(20, 40, 11)
     plot(1) = gsn_csm_contour_map_ce(wks, PRECL_mod_climo_ratio(i,:,:), res_plot)

@@ -7,7 +7,7 @@ load "$ESMDIAG_ROOT/ncl_scripts/tools.ncl"
 
 begin
 
-  prefix = model_id + "." + case_id
+  prefix = model_atm_id + "." + case_id
   suffix = start_date + ":" + end_date + ".nc"
 
   seasons = (/"ANN","JJA","DJF"/)
@@ -48,7 +48,7 @@ begin
   LWCF_obs_climo_i(1,:,:) = linint2(lon_obs, lat_obs, LWCF_obs_JJA, True, lon_mod, lat_mod, 0)
   LWCF_obs_climo_i(2,:,:) = linint2(lon_obs, lat_obs, LWCF_obs_DJF, True, lon_mod, lat_mod, 0)
 
-  wgt_lat = get_wgt_lat(model_id, case_id, lat_mod)
+  wgt_lat = get_wgt_lat(model_atm_id, case_id, lat_mod)
 
   res_plot = common_plot_settings()
   res_plot@cnLinesOn = False
@@ -75,7 +75,7 @@ begin
 
     gsn_define_colormap(wks, "amwg")
 
-    res_plot@gsnLeftString = model_id + ": " + case_id
+    res_plot@gsnLeftString = model_atm_id + "@" + model_id + ": " + case_id
     res_plot@gsnRightString = "MEAN = "+sprintf("%4.2f", wgt_areaave(LWCF_mod_climo(i,:,:), wgt_lat, 1, 0))
     res_plot@cnLevels = (/-45,-30,-20,-10,-0,10,20,30,40,50,60,70,85,100,115/)
     plot(0) = gsn_csm_contour_map_ce(wks, LWCF_mod_climo(i,:,:), res_plot)
@@ -84,7 +84,7 @@ begin
     res_plot@gsnRightString = "MEAN = "+sprintf("%4.2f", wgt_areaave(LWCF_obs_climo_i(i,:,:), wgt_lat, 1, 0))
     plot(1) = gsn_csm_contour_map_ce(wks, LWCF_obs_climo_i(0,:,:), res_plot)
 
-    res_plot@gsnLeftString = model_id + " - CERES"
+    res_plot@gsnLeftString = model_atm_id + "@" + model_id + " - CERES"
     res_plot@gsnRightString = "RMSE = "+sprintf("%4.2f", sqrt(wgt_areaave(diff^2, wgt_lat, 1, 0)))
     res_plot@cnLevels = (/-80,-60,-40,-30,-20,-10,-5,0,5,10,20,30,40,60,80/)
     plot(2) = gsn_csm_contour_map_ce(wks, diff, res_plot)

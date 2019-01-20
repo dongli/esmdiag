@@ -2,15 +2,14 @@ $LOAD_PATH << "#{ENV['ESMDIAG_ROOT']}/framework"
 
 require 'pp'
 require 'digest'
+require 'forwardable'
 require 'fileutils'
+require 'json'
 require 'date'
-begin
-  require 'byebug'
-rescue LoadError => e
-end
 
 require 'runtime/cli'
 require 'runtime/run'
+require 'runtime/config_item'
 require 'runtime/config_manager'
 require 'runtime/cache'
 require 'runtime/attached_variables'
@@ -32,5 +31,3 @@ require 'diagflow/figure.rb'
 require 'diagflow/diagflow_dsl'
 require 'diagflow/diagflow'
 require 'diagflow/diagflow_manager'
-
-EsmDiag::ConfigManager.init

@@ -7,7 +7,7 @@ load "$ESMDIAG_ROOT/ncl_scripts/tools.ncl"
 
 begin
 
-  prefix = model_id + "." + case_id
+  prefix = model_atm_id + "." + case_id
   suffix = start_date + ":" + end_date + ".nc"
 
   f = addfile(prefix + ".FLUT.monthly." + suffix, "r")
@@ -19,7 +19,7 @@ begin
   lat = f->lat
   lon = f->lon
 
-  wgt_lat = get_wgt_lat(model_id, case_id, lat)
+  wgt_lat = get_wgt_lat(model_atm_id, case_id, lat)
 
   diff = FSNTOA - FLUT
   diff_climo = dim_avg_n_Wrap(diff, 0)

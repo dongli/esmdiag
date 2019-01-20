@@ -1,0 +1,46 @@
+{
+  "model_info": {
+    "id": "FGOALS-g3",
+    "atm": {
+      "id": "GAMIL",
+      "grid": "lat_lon",
+      "fixed": {
+        "wgt_lat": "gw"
+      }
+    },
+    "ocn": {
+      "id": "LICOM",
+      "grid": "tripole"
+    },
+    "ice": {
+      "id": "CICE",
+      "grid": "tripole"
+    }
+  },
+  "case_info": {
+    "id": "piControl-bugfix-licom-80368d"
+  },
+  "date": {
+    "start": "0030-01-01",
+    "end": "0060-12-31"
+  },
+  "model_data_info": {
+    "root": "~/CMIP6/run/piControl-bugfix-licom-80368d/run",
+    "atm": {
+      "monthly": {
+        "pattern": "*.gamil.h0.*.nc"
+      },
+      "daily": {
+        "pattern": "*.gamil.h1.*.nc"
+      }
+    },
+    "ice": {
+      "monthly": {
+        "pattern": "*.cice.h.*.nc"
+      }
+    }
+  },
+  "use_metrics": {
+    "climo": {}
+  }
+}
