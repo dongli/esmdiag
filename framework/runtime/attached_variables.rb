@@ -7,7 +7,7 @@ module EsmDiag
       @@attached_variables[comp] = []
       if ConfigManager.model_info[comp].has_key? :fixed
         case ConfigManager.model_info[comp][:grid].to_sym
-        when :lat_lon
+        when :lat_lon, :latlon
           if ConfigManager.model_info[comp][:fixed].has_key? 'wgt_lon'
             @@attached_variables[comp] << ConfigManager.model_info[comp][:fixed]['wgt_lon']
           end

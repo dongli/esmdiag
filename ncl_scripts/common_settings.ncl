@@ -6,6 +6,7 @@ begin
   res@gsnDraw = False
   res@gsnFrame = False
   res@gsnSpreadColors = True
+	res@mpCenterLonF = 180.0
 
   ; 字体大小
   res@txFontHeightF = 0.02

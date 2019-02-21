@@ -5,10 +5,10 @@ module EsmDiag
     PermittedKeys = {
       model_info: {
         id: nil,
-        atm: { id: nil, grid: nil, fixed: nil },
-        lnd: { id: nil, grid: nil, fixed: nil },
-        ocn: { id: nil, grid: nil, fixed: nil },
-        ice: { id: nil, grid: nil, fixed: nil }
+        atm: { id: nil, grid: nil, grid_file: nil, invert_lat: nil, fixed: nil },
+        lnd: { id: nil, grid: nil, grid_file: nil, invert_lat: nil, fixed: nil },
+        ocn: { id: nil, grid: nil, grid_file: nil, invert_lat: nil, fixed: nil },
+        ice: { id: nil, grid: nil, grid_file: nil, invert_lat: nil, fixed: nil }
       },
       case_info: { id: nil },
       model_data_info: {
@@ -19,6 +19,12 @@ module EsmDiag
         ice: { root: nil, monthly: DatasetSpec, daily: DatasetSpec }
       },
       date: { start: nil, end: nil },
+      regrid: {
+        atm: { to: nil },
+        lnd: { to: nil },
+        ocn: { to: nil },
+        ice: { to: nil }
+      },
       use_metrics: []
     }.freeze
 

@@ -19,13 +19,24 @@ module EsmDiag
         end
         EsmDiag.run "ncrename -O -h -v #{old_name},#{var} #{output_file_name}"
       else
-        if tag == :fixed
-          cdo "select,name=#{var} #{dataset.data_list} #{output_file_name}"
+        if ConfigManager.model_info[comp][:invert_lat]
+          if tag == :fixed
+            cdo "invertlat -select,name=#{var} #{dataset.data_list} #{output_file_name}"
+          else
+            cdo "invertlat -select,name=#{var}," +
+                "startdate=#{ConfigManager.date[:start]}," +
+                "enddate=#{ConfigManager.date[:end]} " +
+                "#{dataset.data_list} #{output_file_name}"
+          end
         else
-          cdo "select,name=#{var}," +
-              "startdate=#{ConfigManager.date[:start]}," +
-              "enddate=#{ConfigManager.date[:end]} " +
-              "#{dataset.data_list} #{output_file_name}"
+          if tag == :fixed
+            cdo "select,name=#{var} #{dataset.data_list} #{output_file_name}"
+          else
+            cdo "select,name=#{var}," +
+                "startdate=#{ConfigManager.date[:start]}," +
+                "enddate=#{ConfigManager.date[:end]} " +
+                "#{dataset.data_list} #{output_file_name}"
+          end
         end
       end
       Cache.save_pipeline output_file_name

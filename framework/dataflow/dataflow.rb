@@ -43,6 +43,15 @@ module EsmDiag
             actions.each do |action, options|
               next if not Actions.respond_to? action
               Actions.send(action, comp, dataset, metric, tag, var, options)
+              if action == :extract and ConfigManager.regrid and ConfigManager.regrid[comp]
+                if not ConfigManager.model_info[comp][:grid_file]
+                  CLI.report_error "No grid_file for regridding #{ConfigManager.model_info[comp][:id]}!"
+                end
+                Actions.send(:regrid, comp, dataset, metric, tag, var, {
+                  src_grid_file: ConfigManager.model_info[comp][:grid_file],
+                  dst_grid: ConfigManager.regrid[comp][:to]
+                })
+              end
             end
           end
         end
