@@ -7,8 +7,8 @@ module EsmDiag
     def initialize
       metric = self.class.to_s.gsub(/EsmDiag::Dataflow_/, '')
       eval "@datasets = @@datasets_#{metric}"
-      @datasets.each do |comp, tags|
-        tags.each do |tag, dataset|
+      @datasets.each do |comp, tag_dataset_pairs|
+        tag_dataset_pairs.each do |tag, dataset|
           if not dataset.root
             CLI.report_error "No #{comp} in model_data_info!" if not ConfigManager.model_data_info.has_key? comp
             CLI.report_error "No #{tag} in model_data_info->#{comp}!" if not ConfigManager.model_data_info[comp].has_key? tag
@@ -37,8 +37,8 @@ module EsmDiag
     end
 
     def run metric
-      @datasets.each do |comp, tags|
-        tags.each do |tag, dataset|
+      @datasets.each do |comp, tag_dataset_pairs|
+        tag_dataset_pairs.reverse_each.to_h.each do |tag, dataset|
           dataset.variables.each do |var, actions|
             actions.each do |action, options|
               next if not Actions.respond_to? action

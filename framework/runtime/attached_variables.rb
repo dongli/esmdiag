@@ -2,7 +2,6 @@ module EsmDiag
   def self.attached_variables
     return @@attached_variables if defined? @@attached_variables
     @@attached_variables = {}
-    # 网格权重
     ConfigManager.model_info.each do |comp, config|
       @@attached_variables[comp] = []
       if ConfigManager.model_info[comp].has_key? :fixed
