@@ -1,7 +1,7 @@
 module EsmDiag
   class Dataflow_climo < Dataflow
     create_dataset :atm, :monthly do
-      requires :PS, :PRECC, :PRECL, :PRECT, :SWCF, :LWCF, :U, :V, :T, :Q, :FLUT, :FSNTOA, :FSNS, :FLNS, :LHFLX, :SHFLX
+      requires :PS, :PRECC, :PRECL, :PRECT, :SWCF, :LWCF, :U, :V, :T, :Q, :FLUTOA, :FSNTOA, :FSNS, :FLNS, :LHFLX, :SHFLX
       extract :all
       vinterp :U, :V, {
         :on => [ 1000, 925, 850, 775, 700, 600, 500, 400, 300, 250, 200, 150, 100, 70, 50, 30, 10],

@@ -10,8 +10,8 @@ begin
   prefix = model_atm_id + "." + case_id
   suffix = start_date + ":" + end_date + ".nc"
 
-  f = addfile(prefix + ".FLUT.monthly." + suffix, "r")
-  FLUT = f->FLUT
+  f = addfile(prefix + ".FLUTOA.monthly." + suffix, "r")
+  FLUTOA = f->FLUTOA
 
   f = addfile(prefix + ".FSNTOA.monthly." + suffix, "r")
   FSNTOA = f->FSNTOA
@@ -21,7 +21,7 @@ begin
 
   wgt_lat = get_wgt_lat(model_atm_id, case_id, lat)
 
-  diff = FSNTOA - FLUT
+  diff = FSNTOA - FLUTOA
   diff_climo = dim_avg_n_Wrap(diff, 0)
   diff_climo!0 = "lat"
   diff_climo&lat = lat
@@ -36,7 +36,7 @@ begin
   res_plot@cnLinesOn = False
   res_plot@cnFillOn = True
   res_plot@mpLandFillColor = "white"
-  res_plot@gsnLeftString = "FSNTOA - FLUT (" + FSNTOA@units + ")"
+  res_plot@gsnLeftString = "FSNTOA - FLUTOA (" + FSNTOA@units + ")"
   res_plot@gsnRightString = "mean: " + sprintf("%5.2f", wgt_areaave(diff_climo, wgt_lat, 1, 0))
   res_plot@cnLevelSelectionMode = "ExplicitLevels"
   res_plot@cnLevels = fspan(-120, 80, 11)

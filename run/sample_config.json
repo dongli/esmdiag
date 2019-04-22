@@ -20,14 +20,14 @@
     }
   },
   "case_info": {
-    "id": "post_cpl_2-dbd7b7"
+    "id": "rebase_clm45"
   },
   "date": {
-    "start": "0005-01-01",
-    "end": "0012-12-31"
+    "start": "0010-01-01",
+    "end": "0020-12-31"
   },
   "model_data_info": {
-    "root": "~/CMIP6/run/post_cpl_2-dbd7b7/run",
+    "root": "~/CMIP6/run/rebase_clm45/run",
     "atm": {
       "monthly": {
         "pattern": "*.gamil.h0.*.nc"
