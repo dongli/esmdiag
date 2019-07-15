@@ -5,10 +5,12 @@ module EsmDiag
     attr_reader :datasets
 
     def initialize
-      metric = self.class.to_s.gsub(/EsmDiag::Dataflow_/, '')
+      metric = self.class.to_s.gsub(/EsmDiag::Dataflow_/, '').to_sym
       eval "@datasets = @@datasets_#{metric}"
       @datasets.each do |comp, tag_dataset_pairs|
+        next if ConfigManager.metrics.send(metric).respond_to? :only and not ConfigManager.metrics.send(metric).only.include? comp.to_s
         tag_dataset_pairs.each do |tag, dataset|
+          CLI.report_notice "Initialize component #{comp} for #{metric} metric."
           if not dataset.root
             CLI.report_error "No #{comp} in model_data_info!" if not ConfigManager.model_data_info.has_key? comp
             CLI.report_error "No #{tag} in model_data_info->#{comp}!" if not ConfigManager.model_data_info[comp].has_key? tag
@@ -26,6 +28,8 @@ module EsmDiag
             dataset.variables[var][:pipelines] = [ '' ]
           end
         end
+        # Load model variable mapping JSON file.
+        ConfigManager.model_info[comp][:var_map] = JSON.parse(File.open("#{ENV['ESMDIAG_ROOT']}/models/#{ConfigManager.model_info.send(comp).id.downcase}_vars.json").read)
       end
       EsmDiag.attached_variables.each do |comp, vars|
         selected_data = Dir.glob(@datasets[comp].values.first.data_list).first
@@ -38,7 +42,10 @@ module EsmDiag
 
     def run metric
       @datasets.each do |comp, tag_dataset_pairs|
-        tag_dataset_pairs.reverse_each.to_h.each do |tag, dataset|
+        next if ConfigManager.metrics.send(metric).respond_to? :only and not ConfigManager.metrics.send(metric).only.include? comp.to_s
+        CLI.report_notice "Run diagnostics of component #{comp} for #{metric} metric."
+        tag_dataset_pairs.each do |tag, dataset|
+          CLI.report_notice "Process #{tag} ..."
           dataset.variables.each do |var, actions|
             actions.each do |action, options|
               next if not Actions.respond_to? action

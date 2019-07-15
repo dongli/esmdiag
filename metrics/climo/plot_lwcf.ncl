@@ -13,40 +13,40 @@ begin
   seasons = (/"ANN","JJA","DJF"/)
   num_season = dimsizes(seasons)
 
-  f = addfile(prefix + ".LWCF.monthly." + suffix, "r")
-  LWCF_mod = f->LWCF
+  f = addfile(prefix + ".lwcf.monthly." + suffix, "r")
+  lwcf_mod = f->lwcf
   lat_mod = f->lat
   lon_mod = f->lon
   num_lat_mod = dimsizes(lat_mod)
   num_lon_mod = dimsizes(lon_mod)
 
-  tmp = clmMonTLL(LWCF_mod)
-  LWCF_mod_climo = new((/num_season,num_lat_mod,num_lon_mod/), typeof(LWCF_mod))
-  LWCF_mod_climo!1 = "lat"
-  LWCF_mod_climo&lat = lat_mod
-  LWCF_mod_climo!2 = "lon"
-  LWCF_mod_climo&lon = lon_mod
-  LWCF_mod_climo(0,:,:) = dim_avg_n_Wrap(tmp, 0)
-  LWCF_mod_climo(1,:,:) = rm_single_dims(month_to_season(tmp, "JJA"))
-  LWCF_mod_climo(2,:,:) = rm_single_dims(month_to_season(tmp, "DJF"))
+  tmp = clmMonTLL(lwcf_mod)
+  lwcf_mod_climo = new((/num_season,num_lat_mod,num_lon_mod/), typeof(lwcf_mod))
+  lwcf_mod_climo!1 = "lat"
+  lwcf_mod_climo&lat = lat_mod
+  lwcf_mod_climo!2 = "lon"
+  lwcf_mod_climo&lon = lon_mod
+  lwcf_mod_climo(0,:,:) = dim_avg_n_Wrap(tmp, 0)
+  lwcf_mod_climo(1,:,:) = rm_single_dims(month_to_season(tmp, "JJA"))
+  lwcf_mod_climo(2,:,:) = rm_single_dims(month_to_season(tmp, "DJF"))
   delete(tmp)
 
   f = addfile("$ESMDIAG_ROOT/obs/data/CERES_ANN_climo.nc", "r")
-  LWCF_obs_ANN = rm_single_dims(f->LWCF)
+  lwcf_obs_ANN = rm_single_dims(f->LWCF)
   lat_obs = f->lat
   lon_obs = f->lon
 
   f = addfile("$ESMDIAG_ROOT/obs/data/CERES_JJA_climo.nc", "r")
-  LWCF_obs_JJA = rm_single_dims(f->LWCF)
+  lwcf_obs_JJA = rm_single_dims(f->LWCF)
 
   f = addfile("$ESMDIAG_ROOT/obs/data/CERES_DJF_climo.nc", "r")
-  LWCF_obs_DJF = rm_single_dims(f->LWCF)
+  lwcf_obs_DJF = rm_single_dims(f->LWCF)
 
-  LWCF_obs_climo_i = new((/num_season,num_lat_mod,num_lon_mod/), typeof(LWCF_mod))
-  copy_VarCoords(LWCF_mod_climo, LWCF_obs_climo_i)
-  LWCF_obs_climo_i(0,:,:) = linint2(lon_obs, lat_obs, LWCF_obs_ANN, True, lon_mod, lat_mod, 0)
-  LWCF_obs_climo_i(1,:,:) = linint2(lon_obs, lat_obs, LWCF_obs_JJA, True, lon_mod, lat_mod, 0)
-  LWCF_obs_climo_i(2,:,:) = linint2(lon_obs, lat_obs, LWCF_obs_DJF, True, lon_mod, lat_mod, 0)
+  lwcf_obs_climo_i = new((/num_season,num_lat_mod,num_lon_mod/), typeof(lwcf_mod))
+  copy_VarCoords(lwcf_mod_climo, lwcf_obs_climo_i)
+  lwcf_obs_climo_i(0,:,:) = linint2(lon_obs, lat_obs, lwcf_obs_ANN, True, lon_mod, lat_mod, 0)
+  lwcf_obs_climo_i(1,:,:) = linint2(lon_obs, lat_obs, lwcf_obs_JJA, True, lon_mod, lat_mod, 0)
+  lwcf_obs_climo_i(2,:,:) = linint2(lon_obs, lat_obs, lwcf_obs_DJF, True, lon_mod, lat_mod, 0)
 
   wgt_lat = get_wgt_lat(model_atm_id, case_id, lat_mod)
 
@@ -65,24 +65,24 @@ begin
   plot = new(3, graphic)
 
   do i = 0, num_season - 1
-    diff = LWCF_mod_climo(i,:,:) - LWCF_obs_climo_i(i,:,:)
+    diff = lwcf_mod_climo(i,:,:) - lwcf_obs_climo_i(i,:,:)
     diff!0 = "lat"
     diff&lat = lat_mod
     diff!1 = "lon"
     diff&lon = lon_mod
 
-    wks = gsn_open_wks("pdf", prefix + ".climo.LWCF." + seasons(i))
+    wks = gsn_open_wks("pdf", prefix + ".climo.lwcf." + seasons(i))
 
     gsn_define_colormap(wks, "amwg")
 
     res_plot@gsnLeftString = model_atm_id + "@" + model_id + ": " + case_id
-    res_plot@gsnRightString = "MEAN = "+sprintf("%4.2f", wgt_areaave(LWCF_mod_climo(i,:,:), wgt_lat, 1, 0))
+    res_plot@gsnRightString = "MEAN = "+sprintf("%4.2f", wgt_areaave(lwcf_mod_climo(i,:,:), wgt_lat, 1, 0))
     res_plot@cnLevels = (/-45,-30,-20,-10,-0,10,20,30,40,50,60,70,85,100,115/)
-    plot(0) = gsn_csm_contour_map_ce(wks, LWCF_mod_climo(i,:,:), res_plot)
+    plot(0) = gsn_csm_contour_map_ce(wks, lwcf_mod_climo(i,:,:), res_plot)
 
     res_plot@gsnLeftString = "CERES-EBAF"
-    res_plot@gsnRightString = "MEAN = "+sprintf("%4.2f", wgt_areaave(LWCF_obs_climo_i(i,:,:), wgt_lat, 1, 0))
-    plot(1) = gsn_csm_contour_map_ce(wks, LWCF_obs_climo_i(0,:,:), res_plot)
+    res_plot@gsnRightString = "MEAN = "+sprintf("%4.2f", wgt_areaave(lwcf_obs_climo_i(i,:,:), wgt_lat, 1, 0))
+    plot(1) = gsn_csm_contour_map_ce(wks, lwcf_obs_climo_i(0,:,:), res_plot)
 
     res_plot@gsnLeftString = model_atm_id + "@" + model_id + " - CERES"
     res_plot@gsnRightString = "RMSE = "+sprintf("%4.2f", sqrt(wgt_areaave(diff^2, wgt_lat, 1, 0)))

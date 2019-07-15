@@ -13,45 +13,45 @@ begin
   seasons = (/"ANN","JJA","DJF"/)
   num_season = dimsizes(seasons)
 
-  f = addfile(prefix + ".PRECT.monthly." + suffix, "r")
-  PRECT_mod   = f->PRECT
+  f = addfile(prefix + ".pr.monthly." + suffix, "r")
+  pr_mod   = f->pr
   lat_mod     = f->lat
   lon_mod     = f->lon
   num_lat_mod = dimsizes(lat_mod)
   num_lon_mod = dimsizes(lon_mod)
 
   ; 转换单位（TODO: 在其它地方做？）
-  PRECT_mod = (/PRECT_mod*86400000/)
-  PRECT_mod@units = "mm/day"
+  pr_mod = (/pr_mod*86400000/)
+  pr_mod@units = "mm/day"
 
-  tmp = clmMonTLL(PRECT_mod)
-  PRECT_mod_climo = new((/num_season,num_lat_mod,num_lon_mod/), typeof(PRECT_mod))
-  PRECT_mod_climo!1 = "lat"
-  PRECT_mod_climo&lat = lat_mod
-  PRECT_mod_climo!2 = "lon"
-  PRECT_mod_climo&lon = lon_mod
-  PRECT_mod_climo(0,:,:) = dim_avg_n_Wrap(tmp, 0)
-  PRECT_mod_climo(1,:,:) = rm_single_dims(month_to_season(tmp, "JJA"))
-  PRECT_mod_climo(2,:,:) = rm_single_dims(month_to_season(tmp, "DJF"))
+  tmp = clmMonTLL(pr_mod)
+  pr_mod_climo = new((/num_season,num_lat_mod,num_lon_mod/), typeof(pr_mod))
+  pr_mod_climo!1 = "lat"
+  pr_mod_climo&lat = lat_mod
+  pr_mod_climo!2 = "lon"
+  pr_mod_climo&lon = lon_mod
+  pr_mod_climo(0,:,:) = dim_avg_n_Wrap(tmp, 0)
+  pr_mod_climo(1,:,:) = rm_single_dims(month_to_season(tmp, "JJA"))
+  pr_mod_climo(2,:,:) = rm_single_dims(month_to_season(tmp, "DJF"))
   delete(tmp)
 
   f = addfile("$ESMDIAG_ROOT/obs/data/XIEARKIN_ANN_climo.nc", "r")
-  PRECT_obs_ANN = rm_single_dims(f->PRECT)
+  pr_obs_ANN = rm_single_dims(f->PRECT)
   lat_obs = f->lat
   lon_obs = f->lon
 
   f = addfile("$ESMDIAG_ROOT/obs/data/XIEARKIN_JJA_climo.nc", "r")
-  PRECT_obs_JJA = rm_single_dims(f->PRECT)
+  pr_obs_JJA = rm_single_dims(f->PRECT)
 
   f = addfile("$ESMDIAG_ROOT/obs/data/XIEARKIN_DJF_climo.nc", "r")
-  PRECT_obs_DJF = rm_single_dims(f->PRECT)
+  pr_obs_DJF = rm_single_dims(f->PRECT)
 
   ; 选择将观测插值到模式格点？
-  PRECT_obs_climo_i = new((/num_season,num_lat_mod,num_lon_mod/), typeof(PRECT_mod))
-  copy_VarCoords(PRECT_mod_climo, PRECT_obs_climo_i)
-  PRECT_obs_climo_i(0,:,:) = linint2(lon_obs, lat_obs, PRECT_obs_ANN, True, lon_mod, lat_mod, 0)
-  PRECT_obs_climo_i(1,:,:) = linint2(lon_obs, lat_obs, PRECT_obs_JJA, True, lon_mod, lat_mod, 0)
-  PRECT_obs_climo_i(2,:,:) = linint2(lon_obs, lat_obs, PRECT_obs_DJF, True, lon_mod, lat_mod, 0)
+  pr_obs_climo_i = new((/num_season,num_lat_mod,num_lon_mod/), typeof(pr_mod))
+  copy_VarCoords(pr_mod_climo, pr_obs_climo_i)
+  pr_obs_climo_i(0,:,:) = linint2(lon_obs, lat_obs, pr_obs_ANN, True, lon_mod, lat_mod, 0)
+  pr_obs_climo_i(1,:,:) = linint2(lon_obs, lat_obs, pr_obs_JJA, True, lon_mod, lat_mod, 0)
+  pr_obs_climo_i(2,:,:) = linint2(lon_obs, lat_obs, pr_obs_DJF, True, lon_mod, lat_mod, 0)
 
   wgt_lat = get_wgt_lat(model_atm_id, case_id, lat_mod)
 
@@ -70,24 +70,24 @@ begin
   plot = new(3, graphic)
 
   do i = 0, num_season - 1
-    diff = PRECT_mod_climo(i,:,:) - PRECT_obs_climo_i(i,:,:)
+    diff = pr_mod_climo(i,:,:) - pr_obs_climo_i(i,:,:)
     diff!0 = "lat"
     diff&lat = lat_mod
     diff!1 = "lon"
     diff&lon = lon_mod
 
-    wks = gsn_open_wks("pdf", prefix + ".climo.PRECT." + seasons(i))
+    wks = gsn_open_wks("pdf", prefix + ".climo.pr." + seasons(i))
 
     gsn_define_colormap(wks, "amwg")
 
     res_plot@gsnLeftString = model_atm_id + "@" + model_id
-    res_plot@gsnRightString = "MEAN = " + sprintf("%4.2f", wgt_areaave(PRECT_mod_climo(i,:,:), wgt_lat, 1, 0))
+    res_plot@gsnRightString = "MEAN = " + sprintf("%4.2f", wgt_areaave(pr_mod_climo(i,:,:), wgt_lat, 1, 0))
     res_plot@cnLevels=(/0.2,0.5,1,2,3,4,5,6,7,8,9,10,12,14,17/)
-    plot(0) = gsn_csm_contour_map_ce(wks, PRECT_mod_climo(i,:,:), res_plot)
+    plot(0) = gsn_csm_contour_map_ce(wks, pr_mod_climo(i,:,:), res_plot)
 
     res_plot@gsnLeftString = "XIE-ARKIN"
-    res_plot@gsnRightString = "MEAN = " + sprintf("%4.2f", wgt_areaave(PRECT_obs_climo_i(i,:,:), wgt_lat, 1, 0))
-    plot(1) = gsn_csm_contour_map_ce(wks, PRECT_obs_climo_i(i,:,:), res_plot)
+    res_plot@gsnRightString = "MEAN = " + sprintf("%4.2f", wgt_areaave(pr_obs_climo_i(i,:,:), wgt_lat, 1, 0))
+    plot(1) = gsn_csm_contour_map_ce(wks, pr_obs_climo_i(i,:,:), res_plot)
 
     res_plot@gsnLeftString = model_atm_id + "@" + model_id + " - XIE-ARKIN"
     res_plot@gsnRightString = "RMSE = "+sprintf("%4.2f", sqrt(wgt_areaave(diff^2, wgt_lat, 1, 0)))
@@ -99,38 +99,38 @@ begin
   end do
 
   ; 绘制对流性降水与格点尺度降水的比例。
-  f = addfile(prefix + ".PRECC.monthly." + suffix, "r")
-  PRECC_mod = f->PRECC
+  f = addfile(prefix + ".prc.monthly." + suffix, "r")
+  prc_mod = f->prc
 
   ; 转换单位（TODO: 在其它地方做？）
-  PRECC_mod = (/PRECC_mod*86400000/)
-  PRECC_mod@units = "mm/day"
+  prc_mod = (/prc_mod*86400000/)
+  prc_mod@units = "mm/day"
 
-  PRECC_mod_climo = new((/num_season,num_lat_mod,num_lon_mod/), typeof(PRECC_mod))
-  copy_VarCoords(PRECT_mod_climo, PRECC_mod_climo)
-  tmp = clmMonTLL(PRECC_mod)
-  PRECC_mod_climo(0,:,:) = dim_avg_n_Wrap(tmp, 0)
-  PRECC_mod_climo(1,:,:) = rm_single_dims(month_to_season(tmp, "JJA"))
-  PRECC_mod_climo(2,:,:) = rm_single_dims(month_to_season(tmp, "DJF"))
+  prc_mod_climo = new((/num_season,num_lat_mod,num_lon_mod/), typeof(prc_mod))
+  copy_VarCoords(pr_mod_climo, prc_mod_climo)
+  tmp = clmMonTLL(prc_mod)
+  prc_mod_climo(0,:,:) = dim_avg_n_Wrap(tmp, 0)
+  prc_mod_climo(1,:,:) = rm_single_dims(month_to_season(tmp, "JJA"))
+  prc_mod_climo(2,:,:) = rm_single_dims(month_to_season(tmp, "DJF"))
 
-  f = addfile(prefix + ".PRECL.monthly." + suffix, "r")
-  PRECL_mod = f->PRECL
+  f = addfile(prefix + ".prl.monthly." + suffix, "r")
+  prl_mod = f->prl
 
   ; 转换单位（TODO: 在其它地方做？）
-  PRECL_mod = (/PRECL_mod*86400000/)
-  PRECL_mod@units = "mm/day"
+  prl_mod = (/prl_mod*86400000/)
+  prl_mod@units = "mm/day"
 
-  PRECL_mod_climo = new((/num_season,num_lat_mod,num_lon_mod/), typeof(PRECL_mod))
-  copy_VarCoords(PRECT_mod_climo, PRECL_mod_climo)
-  tmp = clmMonTLL(PRECL_mod)
-  PRECL_mod_climo(0,:,:) = dim_avg_n_Wrap(tmp, 0)
-  PRECL_mod_climo(1,:,:) = rm_single_dims(month_to_season(tmp, "JJA"))
-  PRECL_mod_climo(2,:,:) = rm_single_dims(month_to_season(tmp, "DJF"))
+  prl_mod_climo = new((/num_season,num_lat_mod,num_lon_mod/), typeof(prl_mod))
+  copy_VarCoords(pr_mod_climo, prl_mod_climo)
+  tmp = clmMonTLL(prl_mod)
+  prl_mod_climo(0,:,:) = dim_avg_n_Wrap(tmp, 0)
+  prl_mod_climo(1,:,:) = rm_single_dims(month_to_season(tmp, "JJA"))
+  prl_mod_climo(2,:,:) = rm_single_dims(month_to_season(tmp, "DJF"))
 
-  PRECC_mod_climo_ratio = PRECC_mod_climo/PRECT_mod_climo*100
-  copy_VarCoords(PRECC_mod_climo, PRECC_mod_climo_ratio)
-  PRECL_mod_climo_ratio = PRECL_mod_climo/PRECT_mod_climo*100
-  copy_VarCoords(PRECL_mod_climo, PRECL_mod_climo_ratio)
+  prc_mod_climo_ratio = prc_mod_climo/pr_mod_climo*100
+  copy_VarCoords(prc_mod_climo, prc_mod_climo_ratio)
+  prl_mod_climo_ratio = prl_mod_climo/pr_mod_climo*100
+  copy_VarCoords(prl_mod_climo, prl_mod_climo_ratio)
 
   delete(res_plot)
   res_plot = common_plot_settings()
@@ -155,19 +155,19 @@ begin
   plot = new(2, graphic)
 
   do i = 0, num_season - 1
-    wks = gsn_open_wks("pdf", prefix + ".climo.PRECC_vs_PRECL." + seasons(i))
+    wks = gsn_open_wks("pdf", prefix + ".climo.prc_vs_prl." + seasons(i))
 
     gsn_define_colormap(wks, "amwg")
 
     res_plot@gsnLeftString = model_atm_id + "@" + model_id
     res_plot@gsnRightString = "convective ratio"
     res_plot@cnLevels= fspan(60, 80, 11)
-    plot(0) = gsn_csm_contour_map_ce(wks, PRECC_mod_climo_ratio(i,:,:), res_plot)
+    plot(0) = gsn_csm_contour_map_ce(wks, prc_mod_climo_ratio(i,:,:), res_plot)
 
     res_plot@gsnLeftString = model_atm_id + "@" + model_id
     res_plot@gsnRightString = "stratiform ratio"
     res_plot@cnLevels= fspan(20, 40, 11)
-    plot(1) = gsn_csm_contour_map_ce(wks, PRECL_mod_climo_ratio(i,:,:), res_plot)
+    plot(1) = gsn_csm_contour_map_ce(wks, prl_mod_climo_ratio(i,:,:), res_plot)
 
     res_panel@txString = case_id + ": " + seasons(i) + " " + start_date + " - " + end_date
     gsn_panel(wks, plot, (/2,1/), res_panel)

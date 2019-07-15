@@ -12,5 +12,17 @@ module EsmDiag
       figure.instance_eval &block if block_given?
       eval "@@figures_#{metric}[tag] = figure"
     end
+
+    def has_atm?
+      ConfigManager.model_info.atm != nil
+    end
+
+    def has_ocn?
+      ConfigManager.model_info.ocn != nil
+    end
+
+    def has_sea_ice?
+      ConfigManager.model_info.ice != nil
+    end
   end
 end

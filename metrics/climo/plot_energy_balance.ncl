@@ -10,24 +10,30 @@ begin
   prefix = model_atm_id + "." + case_id
   suffix = start_date + ":" + end_date + ".nc"
 
-  f = addfile(prefix + ".FSNS.monthly." + suffix, "r")
-  FSNS = f->FSNS
+  f = addfile(prefix + ".rsus.monthly." + suffix, "r")
+  rsus = f->rsus
 
-  f = addfile(prefix + ".FLNS.monthly." + suffix, "r")
-  FLNS = f->FLNS
+  f = addfile(prefix + ".rsds.monthly." + suffix, "r")
+  rsds = f->rsds
 
-	f = addfile(prefix + ".LHFLX.monthly." + suffix, "r")
-	LHFLX = f->LHFLX
+  f = addfile(prefix + ".rlus.monthly." + suffix, "r")
+  rlus = f->rlus
 
-	f = addfile(prefix + ".SHFLX.monthly." + suffix, "r")
-	SHFLX = f->SHFLX
+  f = addfile(prefix + ".rlds.monthly." + suffix, "r")
+  rlds = f->rlds
+
+	f = addfile(prefix + ".hfls.monthly." + suffix, "r")
+	hfls = f->hfls
+
+	f = addfile(prefix + ".hfss.monthly." + suffix, "r")
+	hfss = f->hfss
 
   lat = f->lat
   lon = f->lon
 
   wgt_lat = get_wgt_lat(model_atm_id, case_id, lat)
 
-  diff = FSNS - FLNS - LHFLX - SHFLX
+  diff = rsus - rsds - rlus + rlds - LHFLX - SHFLX
 	diff_climo = dim_avg_n_Wrap(diff, 0)
   diff_climo!0 = "lat"
   diff_climo&lat = lat

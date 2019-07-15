@@ -25,20 +25,25 @@ module EsmDiag
         ocn: { to: nil },
         ice: { to: nil }
       },
-      use_metrics: []
+      metrics: {}
     }.freeze
 
     PermittedKeys.each_key do |key|
-      self.class.send(:define_method, key) do
-        @@item.send key
-      end
+      self.class_eval "def self.#{key}; items.#{key}; end"
     end
 
     def self.parse config_path
       config = JSON.parse(File.open(config_path).read)
-      @@item = ConfigItem.new PermittedKeys, config
-      @@item.date.start = Date.parse(@@item.date.start)
-      @@item.date.end = Date.parse(@@item.date.end)
+      @@items = ConfigItem.new PermittedKeys, config
+      
+      # Replace <case_info.id> by real case id if there is <case_info.id>.
+      items.model_data_info.root.gsub! '<case_info.id>', items.case_info.id
+      @@items.date.start = Date.parse(@@items.date.start)
+      @@items.date.end = Date.parse(@@items.date.end)
+    end
+
+    def self.items
+      @@items || {}
     end
   end
 end

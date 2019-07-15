@@ -7,8 +7,9 @@ module EsmDiag
     def self.extract comp, dataset, metric, tag, var, options
       output_file_name = ActionHelpers.create_file_name comp, var, tag
       return output_file_name if Cache.already_generated? output_file_name
-      if ConfigManager.use_metrics[metric].has_key? 'rename' and ConfigManager.use_metrics[metric]['rename'].values.include? var.to_s
-        old_name = ConfigManager.use_metrics[metric]['rename'].key(var.to_s)
+      var_map = ConfigManager.model_info.send(comp).var_map
+      if var_map.has_key? var.to_s
+        old_name = var_map[var.to_s]["var_name"]
         if tag == :fixed
           cdo "select,name=#{old_name} #{dataset.data_list} #{output_file_name}"
         else

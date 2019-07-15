@@ -10,11 +10,11 @@ begin
   prefix = model_atm_id + "." + case_id
   suffix = start_date + ":" + end_date + ".nc"
 
-  f = addfile(prefix + ".FLUTOA.monthly." + suffix, "r")
-  FLUTOA = f->FLUTOA
+  f = addfile(prefix + ".rlut.monthly." + suffix, "r")
+  rlut = f->rlut
 
-  f = addfile(prefix + ".FSNTOA.monthly." + suffix, "r")
-  FSNTOA = f->FSNTOA
+  f = addfile(prefix + ".rsut.monthly." + suffix, "r")
+  rsut = f->rsut
 
   lat = f->lat
   lon = f->lon

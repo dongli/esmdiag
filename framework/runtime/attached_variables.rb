@@ -4,14 +4,14 @@ module EsmDiag
     @@attached_variables = {}
     ConfigManager.model_info.each do |comp, config|
       @@attached_variables[comp] = []
-      if ConfigManager.model_info[comp].has_key? :fixed
+      if ConfigManager.model_info.send(comp).respond_to? :fixed
         case ConfigManager.model_info[comp][:grid].to_sym
         when :lat_lon, :latlon
-          if ConfigManager.model_info[comp][:fixed].has_key? 'wgt_lon'
-            @@attached_variables[comp] << ConfigManager.model_info[comp][:fixed]['wgt_lon']
+          if ConfigManager.model_info.send(comp).fixed.respond_to? :wgt_lon
+            @@attached_variables[comp] << ConfigManager.model_info.send(comp).fixed.wgt_lon
           end
-          if ConfigManager.model_info[comp][:fixed].has_key? 'wgt_lat'
-            @@attached_variables[comp] << ConfigManager.model_info[comp][:fixed]['wgt_lat']
+          if ConfigManager.model_info.send(comp).fixed.respond_to? :wgt_lat
+            @@attached_variables[comp] << ConfigManager.model_info.send(comp).fixed.wgt_lat
           end
         end
       end

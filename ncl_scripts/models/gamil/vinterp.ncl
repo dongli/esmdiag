@@ -22,7 +22,7 @@ begin
   ; 获取地面气压数据。
   f = addfile(ps_path, "r")
 
-  ps = f->PS
+  ps = f->ps
 
   delete(f)
 

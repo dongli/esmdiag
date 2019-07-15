@@ -26,8 +26,8 @@ begin
 
   lev_tag = "1000:925:850:775:700:600:500:400:300:250:200:150:100:70:50:30:10"
 
-  f = addfile(prefix + ".T.monthly.vinterp" + lev_tag + "." + suffix, "r")
-  T_mod_zonal_mean = zonalAve(f->T)
+  f = addfile(prefix + ".ta.monthly.vinterp" + lev_tag + "." + suffix, "r")
+  T_mod_zonal_mean = zonalAve(f->ta)
 
   lev = f->lev_p
   num_lev = dimsizes(lev)
@@ -70,7 +70,7 @@ begin
     diff!1 = "lat"
     diff&lat = lat_mod
 
-    wks = gsn_open_wks("pdf", prefix + ".climo.zonal_mean.T." + seasons(i))
+    wks = gsn_open_wks("pdf", prefix + ".climo.zonal_mean.ta." + seasons(i))
 
     gsn_define_colormap(wks, "amwg")
 
@@ -98,8 +98,8 @@ begin
 
   lev_tag = "1000:925:850:775:700:600:500:400:300:250:200:150:100:70:50:30:10"
 
-  f = addfile(prefix + ".U.monthly.vinterp" + lev_tag + "." + suffix, "r")
-  U_mod_zonal_mean = zonalAve(f->U)
+  f = addfile(prefix + ".ua.monthly.vinterp" + lev_tag + "." + suffix, "r")
+  U_mod_zonal_mean = zonalAve(f->ua)
 
   lev = f->lev_p
   num_lev = dimsizes(lev)
@@ -170,8 +170,8 @@ begin
 
   lev_tag = "1000:925:850:775:700:600:500:400:300"
 
-  f = addfile(prefix + ".Q.monthly.vinterp" + lev_tag + "." + suffix, "r")
-  Q_mod_zonal_mean = zonalAve(f->Q)
+  f = addfile(prefix + ".hus.monthly.vinterp" + lev_tag + "." + suffix, "r")
+  Q_mod_zonal_mean = zonalAve(f->hus)
 
   lev = f->lev_p
   num_lev = dimsizes(lev)

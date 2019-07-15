@@ -1,0 +1,297 @@
+{
+  "ccb": {
+    "var_name": "XXX",
+    "units": "Pa",
+    "is_var_2d": true
+  },
+  "cct": {
+    "var_name": "XXX",
+    "units": "Pa",
+    "is_var_2d": true
+  },
+  "ci": {
+    "var_name": "XXX",
+    "units": "1",
+    "is_var_2d": true
+  },
+  "cl": {
+    "var_name": "CLOUD",
+    "units": "1",
+    "is_model_full_levels": true
+  },
+  "cli": {
+    "var_name": "CLDICE",
+    "units": "kg kg-1",
+    "is_model_full_levels": true
+  },
+  "clivi": {
+    "var_name": "XXX",
+    "units": "kg kg-1",
+    "is_var_2d": true
+  },
+  "clt": {
+    "var_name": "CLDTOT",
+    "units": "1",
+    "is_var_2d": true
+  },
+  "clw": {
+    "var_name": "CLDLIQ",
+    "units": "kg kg-1",
+    "is_model_full_levels": true
+  },
+  "clwvi": {
+    "var_name": "XXX",
+    "units": "1",
+    "is_var_2d": true
+  },
+  "evspsbl": {
+    "var_name": "QFLX",
+    "units": "kg m-2 s-1",
+    "is_var_2d": true
+  },
+  "hfls": {
+    "var_name": "LHFLX",
+    "units": "W m-2",
+    "is_var_2d": true,
+    "positive": "up"
+  },
+  "hfss": {
+    "var_name": "SHFLX",
+    "units": "W m-2",
+    "is_var_2d": true,
+    "positive": "up"
+  },
+  "hur": {
+    "var_name": "RELHUM",
+    "units": "%"
+  },
+  "hurs": {
+    "var_name": "XXX",
+    "units": "%",
+    "is_var_2d": true
+  },
+  "hus": {
+    "var_name": "Q",
+    "units": "kg kg-1"
+  },
+  "huss": {
+    "var_name": "QREFHT",
+    "units": "kg kg-1",
+    "is_var_2d": true
+  },
+  "mc": {
+    "var_name": "CMFMC",
+    "units": "kg m-2 s-1",
+    "is_model_half_levels": true,
+    "positive": "up"
+  },
+  "o3": {
+    "var_name": "O3VMR",
+    "units": "m3 m-3"
+  },
+  "pfull": {
+    "var_name": "XXX",
+    "units": "Pa",
+    "is_model_full_levels": true
+  },
+  "phalf": {
+    "var_name": "XXX",
+    "units": "Pa",
+    "is_model_half_levels": true
+  },
+  "pr": {
+    "var_name": "PRECT",
+    "units": "m s-1",
+    "is_var_2d": true
+  },
+  "prc": {
+    "var_name": "PRECC",
+    "units": "m s-1",
+    "is_var_2d": true
+  },
+  "prl": {
+    "var_name": "PRECL",
+    "units": "m s-1"
+  },
+  "prsn": {
+    "var_name": "XXX",
+    "units": "m s-1",
+    "is_var_2d": true
+  },
+  "prw": {
+    "var_name": "TGCLDLWP",
+    "units": "g m-2",
+    "is_var_2d": true
+  },
+  "ps": {
+    "var_name": "PS",
+    "units": "Pa",
+    "is_var_2d": true
+  },
+  "psl": {
+    "var_name": "PSL",
+    "units": "Pa",
+    "is_var_2d": true
+  },
+  "rlds": {
+    "var_name": "FLDS",
+    "units": "W m-2",
+    "is_var_2d": true,
+    "positive": "down"
+  },
+  "rldscs": {
+    "var_name": "FLDSC",
+    "units": "W m-2",
+    "is_var_2d": true,
+    "positive": "down"
+  },
+  "rlus": {
+    "var_name": "FLUS",
+    "units": "W m-2",
+    "is_var_2d": true,
+    "positive": "up"
+  },
+  "rlut": {
+    "var_name": "FLUTOA",
+    "units": "W m-2",
+    "is_var_2d": true,
+    "positive": "up"
+  },
+  "rlutcs": {
+    "var_name": "FLUTOAC",
+    "units": "W m-2",
+    "is_var_2d": true,
+    "positive": "up"
+  },
+  "rsds": {
+    "var_name": "FSDS",
+    "units": "W m-2",
+    "is_var_2d": true,
+    "positive": "down"
+  },
+  "rsdscs": {
+    "var_name": "FSDSC",
+    "units": "W m-2",
+    "is_var_2d": true,
+    "positive": "down"
+  },
+  "rsdt": {
+    "var_name": "FSDTOA",
+    "units": "W m-2",
+    "is_var_2d": true,
+    "positive": "down"
+  },
+  "rsus": {
+    "var_name": "FSUS",
+    "units": "W m-2",
+    "is_var_2d": true,
+    "positive": "up"
+  },
+  "rsuscs": {
+    "var_name": "FSUSC",
+    "units": "W m-2",
+    "is_var_2d": true,
+    "positive": "up"
+  },
+  "rsut": {
+    "var_name": "FSUTOA",
+    "units": "W m-2",
+    "is_var_2d": true,
+    "positive": "up"
+  },
+  "rsutcs": {
+    "var_name": "FSUTOAC",
+    "units": "W m-2",
+    "is_var_2d": true,
+    "positive": "up"
+  },
+  "rtmt": {
+    "var_name": "FSNTOA",
+    "units": "W m-2",
+    "is_var_2d": true,
+    "positive": "up"
+  },
+  "sci": {
+    "var_name": "XXX",
+    "units": "1",
+    "is_var_2d": true
+  },
+  "sfcWind": {
+    "var_name": "XXX",
+    "units": "m s-1",
+    "is_var_2d": true
+  },
+  "ta": {
+    "var_name": "T",
+    "units": "K",
+    "vinterp": "log_linear"
+  },
+  "tas": {
+    "var_name": "TREFHT",
+    "units": "K",
+    "is_var_2d": true
+  },
+  "tasmax": {
+    "var_name": "XXX",
+    "units": "K",
+    "is_var_2d": true
+  },
+  "tasmin": {
+    "var_name": "XXX",
+    "units": "K",
+    "is_var_2d": true
+  },
+  "tauu": {
+    "var_name": "TAUX",
+    "units": "Pa",
+    "is_var_2d": true,
+    "positive": "down"
+  },
+  "tauv": {
+    "var_name": "TAUY",
+    "units": "Pa",
+    "is_var_2d": true,
+    "positive": "down"
+  },
+  "ts": {
+    "var_name": "TS",
+    "units": "K",
+    "is_var_2d": true
+  },
+  "ua": {
+    "var_name": "U",
+    "units": "m s-1"
+  },
+  "uas": {
+    "var_name": "XXX",
+    "units": "m s-1",
+    "is_var_2d": true
+  },
+  "va": {
+    "var_name": "V",
+    "units": "m s-1"
+  },
+  "vas": {
+    "var_name": "XXX",
+    "units": "m s-1",
+    "is_var_2d": true
+  },
+  "wap": {
+    "var_name": "OMEGA",
+    "units": "Pa s-1"
+  },
+  "zg": {
+    "var_name": "Z3",
+    "units": "m"
+  },
+  "swcf": {
+    "var_name": "SWCF",
+    "units": "W m-2",
+    "is_var_2d": true
+  },
+  "lwcf": {
+    "var_name": "LWCF",
+    "units": "W m-2",
+    "is_var_2d": true
+  }
+}

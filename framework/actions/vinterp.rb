@@ -8,7 +8,7 @@ module EsmDiag
       ActionHelpers.start(dataset.variables[var][:pipelines], options).each do |status_pipeline|
         pipeline = status_pipeline.last
         if status_pipeline.first == :active
-          ps_path = ActionHelpers.create_file_name comp, 'PS', tag
+          ps_path = ActionHelpers.create_file_name comp, 'ps', tag
           input_file_name = ActionHelpers.create_file_name comp, var, tag, pipeline
           pipeline << ".vinterp#{options[:on].join(':')}"
           output_file_name = ActionHelpers.create_file_name comp, var, tag, pipeline

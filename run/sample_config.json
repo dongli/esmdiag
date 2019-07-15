@@ -20,14 +20,14 @@
     }
   },
   "case_info": {
-    "id": "rebase_clm45"
+    "id": "point_storm_01"
   },
   "date": {
-    "start": "0010-01-01",
-    "end": "0020-12-31"
+    "start": "1979-01-01",
+    "end": "2015-12-31"
   },
   "model_data_info": {
-    "root": "~/CMIP6/run/rebase_clm45/run",
+    "root": "/public1/wab/CMIP6/run/<case_info.id>/run",
     "atm": {
       "monthly": {
         "pattern": "*.gamil.h0.*.nc"
@@ -52,7 +52,9 @@
       "to": "latlon_1x1"
     }
   },
-  "use_metrics": {
-    "climo": {}
+  "metrics": {
+    "climo": {
+      "only": [ "atm" ]
+    }
   }
 }
